@@ -1,0 +1,698 @@
+/**
+ * Pro DentHub - Landing Page Base Styles
+ * MOBILE-FIRST DESIGN for smartphone-using dental students
+ * Shared styles for all campaign landing pages
+ */
+
+/* CSS Variables */
+:root {
+  --primary-color: #cf4520;
+  --primary-dark: #a33618;
+  --primary-light: #e15a35;
+  --secondary-color: #2d465e;
+  --success-color: #08915e;
+  --warning-color: #ff9800;
+  --urgency-color: #ff5722;
+  --text-dark: #212529;
+  --text-light: #6c757d;
+  --border-color: #dee2e6;
+  --background-light: #f8f9fa;
+  --white: #ffffff;
+
+  --font-primary: "Roboto", system-ui, -apple-system, sans-serif;
+  --font-heading: "Raleway", sans-serif;
+
+  /* Mobile-first spacing */
+  --spacing-xs: 0.5rem;   /* 8px */
+  --spacing-sm: 1rem;     /* 16px */
+  --spacing-md: 1.5rem;   /* 24px */
+  --spacing-lg: 2rem;     /* 32px */
+  --spacing-xl: 3rem;     /* 48px */
+
+  --border-radius: 8px;
+  --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --box-shadow-strong: 0 4px 20px rgba(0, 0, 0, 0.15);
+  --transition: all 0.3s ease;
+
+  /* Mobile touch targets */
+  --touch-target-min: 48px;
+}
+
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(207, 69, 32, 0.2);
+}
+
+/* MOBILE-FIRST: Start with mobile base styles */
+body {
+  font-family: var(--font-primary);
+  font-size: 14px;  /* Smaller for mobile */
+  line-height: 1.6;
+  color: var(--text-dark);
+  background-color: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography - Mobile First */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-sm);
+  color: var(--secondary-color);
+}
+
+h1 {
+  font-size: 1.75rem;  /* 28px on mobile */
+  margin-bottom: var(--spacing-md);
+}
+
+h2 {
+  font-size: 1.5rem;   /* 24px on mobile */
+}
+
+h3 {
+  font-size: 1.25rem;  /* 20px on mobile */
+}
+
+p {
+  margin-bottom: var(--spacing-sm);
+}
+
+.lead {
+  font-size: 1rem;     /* 16px on mobile */
+  font-weight: 300;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+/* Links - Touch friendly */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: var(--transition);
+  min-height: 44px;  /* Touch target */
+  display: inline-flex;
+  align-items: center;
+}
+
+a:hover, a:active {
+  color: var(--primary-dark);
+}
+
+/* Buttons - Mobile First (Touch Optimized) */
+.btn {
+  display: block;  /* Full width on mobile */
+  width: 100%;
+  padding: 14px 20px;
+  min-height: var(--touch-target-min);
+  font-size: 16px;  /* Prevent iOS zoom */
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  border: 2px solid transparent;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--font-primary);
+  touch-action: manipulation;  /* Fast touch response */
+  user-select: none;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border-color: var(--primary-color);
+  box-shadow: 0 2px 8px rgba(207, 69, 32, 0.3);
+}
+
+.btn-primary:hover, .btn-primary:active {
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
+  color: var(--white);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(207, 69, 32, 0.4);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.btn-secondary:hover, .btn-secondary:active {
+  background-color: var(--secondary-color);
+  color: var(--white);
+}
+
+.btn-lg {
+  padding: 16px 24px;
+  font-size: 18px;
+  min-height: 56px;
+}
+
+/* Hero Section - Mobile First */
+.hero {
+  background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+  color: var(--white);
+  padding: var(--spacing-lg) var(--spacing-sm);  /* Tighter padding on mobile */
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  min-height: auto;  /* Don't force height on mobile */
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+  background-size: cover;
+  opacity: 0.5;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--spacing-sm);
+}
+
+.hero h1 {
+  color: var(--white);
+  font-size: 1.75rem;  /* Mobile: 28px */
+  margin-bottom: var(--spacing-sm);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  line-height: 1.3;
+}
+
+.hero .lead {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;  /* Mobile: 16px */
+  margin-bottom: var(--spacing-md);
+  line-height: 1.5;
+}
+
+/* Form Section - Mobile First (Critical for Conversion) */
+.form-section {
+  padding: var(--spacing-md) var(--spacing-sm);
+  background-color: var(--background-light);
+}
+
+.form-container {
+  background: var(--white);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin-bottom: var(--spacing-md);
+}
+
+.form-header {
+  margin-bottom: var(--spacing-md);
+}
+
+/* Benefits Section - Mobile Optimized */
+.benefits-section {
+  padding: var(--spacing-md) var(--spacing-sm);
+}
+
+.benefits-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--spacing-md) 0;
+}
+
+.benefits-list li {
+  padding: 12px 0 12px 36px;
+  position: relative;
+  font-size: 0.95rem;  /* Slightly smaller on mobile */
+  border-bottom: 1px solid var(--border-color);
+  line-height: 1.5;
+}
+
+.benefits-list li:last-child {
+  border-bottom: none;
+}
+
+.benefits-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 24px;
+  height: 24px;
+  background-color: var(--success-color);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Trust Signals - Mobile First */
+.trust-signals {
+  padding: var(--spacing-lg) var(--spacing-sm);
+  background-color: var(--white);
+  text-align: center;
+}
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  /* 2 columns on mobile */
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.stat-item {
+  padding: var(--spacing-sm);
+}
+
+.stat-number {
+  font-size: 2rem;  /* Smaller on mobile */
+  font-weight: 700;
+  color: var(--primary-color);
+  font-family: var(--font-heading);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-top: var(--spacing-xs);
+}
+
+/* Testimonial - Mobile Optimized */
+.testimonial {
+  background-color: var(--background-light);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--primary-color);
+  margin: var(--spacing-md) 0;
+}
+
+.testimonial-text {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--text-dark);
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.6;
+}
+
+.testimonial-author {
+  font-weight: 600;
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+}
+
+.testimonial-role {
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+/* Features Grid - Mobile First (Stacked) */
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr;  /* Single column on mobile */
+  gap: var(--spacing-md);
+  margin: var(--spacing-md) 0;
+}
+
+.feature-card {
+  background: var(--white);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  text-align: center;
+  transition: var(--transition);
+}
+
+.feature-card:active {
+  transform: scale(0.98);
+  box-shadow: var(--box-shadow-strong);
+}
+
+.feature-icon {
+  font-size: 2.5rem;  /* Slightly smaller on mobile */
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-sm);
+}
+
+.feature-title {
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--secondary-color);
+}
+
+.feature-description {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Footer - Mobile Optimized */
+.landing-footer {
+  background-color: var(--secondary-color);
+  color: var(--white);
+  padding: var(--spacing-lg) var(--spacing-sm);
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+.landing-footer p {
+  margin-bottom: var(--spacing-sm);
+}
+
+.landing-footer a {
+  color: var(--white);
+  text-decoration: underline;
+  padding: var(--spacing-xs);
+  min-height: 44px;
+}
+
+.landing-footer a:hover {
+  color: var(--primary-light);
+}
+
+/* Sticky Mobile CTA - Fixed at bottom */
+.sticky-mobile-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  padding: var(--spacing-sm);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: block;  /* Show on mobile */
+}
+
+.sticky-mobile-cta .btn {
+  margin: 0;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 2px 8px rgba(207, 69, 32, 0.3); }
+  50% { box-shadow: 0 4px 16px rgba(207, 69, 32, 0.6); }
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-primary {
+  color: var(--primary-color);
+}
+
+.bg-light {
+  background-color: var(--background-light);
+}
+
+.mb-1 { margin-bottom: var(--spacing-xs); }
+.mb-2 { margin-bottom: var(--spacing-sm); }
+.mb-3 { margin-bottom: var(--spacing-md); }
+.mb-4 { margin-bottom: var(--spacing-lg); }
+.mb-5 { margin-bottom: var(--spacing-xl); }
+
+.mt-1 { margin-top: var(--spacing-xs); }
+.mt-2 { margin-top: var(--spacing-sm); }
+.mt-3 { margin-top: var(--spacing-md); }
+.mt-4 { margin-top: var(--spacing-lg); }
+.mt-5 { margin-top: var(--spacing-xl); }
+
+.py-5 { padding-top: var(--spacing-xl); padding-bottom: var(--spacing-xl); }
+.px-2 { padding-left: var(--spacing-sm); padding-right: var(--spacing-sm); }
+
+/* Mobile utilities */
+.mobile-only {
+  display: block;
+}
+
+.desktop-only {
+  display: none;
+}
+
+/* Loading State */
+.loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  border: 3px solid var(--primary-color);
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spinner 0.8s linear infinite;
+}
+
+@keyframes spinner {
+  to { transform: rotate(360deg); }
+}
+
+/* Success Message */
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius);
+  border: 1px solid #c3e6cb;
+  margin-bottom: var(--spacing-sm);
+  display: none;
+  font-size: 0.9rem;
+}
+
+.success-message.show {
+  display: block;
+}
+
+/* Error Message */
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius);
+  border: 1px solid #f5c6cb;
+  margin-bottom: var(--spacing-sm);
+  display: none;
+  font-size: 0.9rem;
+}
+
+.error-message.show {
+  display: block;
+}
+
+/* ============================================
+   TABLET BREAKPOINT (768px and up)
+   ============================================ */
+@media (min-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 2.25rem;  /* 36px */
+  }
+
+  h2 {
+    font-size: 1.875rem;  /* 30px */
+  }
+
+  h3 {
+    font-size: 1.5rem;  /* 24px */
+  }
+
+  .lead {
+    font-size: 1.125rem;
+  }
+
+  .hero {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;  /* 40px on tablet */
+  }
+
+  .hero .lead {
+    font-size: 1.25rem;
+  }
+
+  .stats-container {
+    grid-template-columns: repeat(4, 1fr);  /* 4 columns on tablet */
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);  /* 2 columns on tablet */
+  }
+
+  .form-section {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .form-container {
+    padding: var(--spacing-lg);
+  }
+
+  /* Hide sticky CTA on tablet */
+  .sticky-mobile-cta {
+    display: none;
+  }
+
+  .mobile-only {
+    display: none;
+  }
+
+  .desktop-only {
+    display: block;
+  }
+}
+
+/* ============================================
+   DESKTOP BREAKPOINT (1024px and up)
+   ============================================ */
+@media (min-width: 1024px) {
+  body {
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: 2.5rem;  /* 40px */
+  }
+
+  h2 {
+    font-size: 2rem;  /* 32px */
+  }
+
+  h3 {
+    font-size: 1.5rem;  /* 24px */
+  }
+
+  .lead {
+    font-size: 1.25rem;
+  }
+
+  .hero {
+    padding: 80px 0 60px;
+  }
+
+  .hero-content {
+    max-width: 800px;
+  }
+
+  .hero h1 {
+    font-size: 3rem;  /* 48px on desktop */
+  }
+
+  .hero .lead {
+    font-size: 1.4rem;
+  }
+
+  .btn {
+    display: inline-block;  /* Not full width on desktop */
+    width: auto;
+    padding: 12px 30px;
+  }
+
+  .btn-lg {
+    padding: 16px 40px;
+  }
+
+  .form-section {
+    padding: 60px 0;
+  }
+
+  .form-container {
+    padding: 40px;
+  }
+
+  .stat-number {
+    font-size: 3rem;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(4, 1fr);  /* 4 columns on desktop */
+  }
+
+  .feature-icon {
+    font-size: 3rem;
+  }
+
+  .benefits-list li {
+    font-size: 1.1rem;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow-strong);
+  }
+}
+
+/* ============================================
+   LARGE DESKTOP (1440px and up)
+   ============================================ */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+
+  .hero h1 {
+    font-size: 3.5rem;  /* 56px on large screens */
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY & PERFORMANCE
+   ============================================ */
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Dark mode support (for future) */
+@media (prefers-color-scheme: dark) {
+  /* Optional: Add dark mode styles if needed */
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .btn-primary {
+    border: 3px solid var(--white);
+  }
+}

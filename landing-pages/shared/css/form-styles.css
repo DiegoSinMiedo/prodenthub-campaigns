@@ -1,0 +1,388 @@
+/**
+ * Pro DentHub - Form Styles
+ * MOBILE-FIRST form styling for lead capture forms
+ * Optimized for touch devices and smartphone users
+ */
+
+/* Form Container - Mobile First */
+.lead-capture-form {
+  max-width: 100%;  /* Full width on mobile */
+  margin: 0 auto;
+}
+
+/* Form Groups - Mobile spacing */
+.form-group {
+  margin-bottom: var(--spacing-md);  /* Consistent spacing */
+}
+
+/* Labels - Mobile optimized */
+.lead-capture-form label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 600;
+  color: var(--secondary-color);
+  font-size: 0.9rem;  /* Slightly smaller on mobile */
+}
+
+.required-field::after {
+  content: " *";
+  color: var(--primary-color);
+}
+
+/* Input Fields - MOBILE-FIRST TOUCH OPTIMIZED */
+.lead-capture-form input[type="text"],
+.lead-capture-form input[type="email"],
+.lead-capture-form input[type="tel"],
+.lead-capture-form select,
+.lead-capture-form textarea {
+  width: 100%;
+  padding: 14px 16px;  /* Larger padding for touch */
+  min-height: var(--touch-target-min);  /* 48px minimum for touch */
+  font-size: 16px;  /* Prevent iOS zoom on focus */
+  font-family: var(--font-primary);
+  color: var(--text-dark);
+  background-color: var(--white);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  touch-action: manipulation;  /* Fast touch response */
+}
+
+.lead-capture-form input[type="text"]:focus,
+.lead-capture-form input[type="email"]:focus,
+.lead-capture-form input[type="tel"]:focus,
+.lead-capture-form select:focus,
+.lead-capture-form textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(207, 69, 32, 0.1);
+}
+
+/* Select Dropdown */
+.lead-capture-form select {
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23212529" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 20px;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+/* Textarea */
+.lead-capture-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Placeholder */
+.lead-capture-form input::placeholder,
+.lead-capture-form textarea::placeholder {
+  color: var(--text-light);
+  opacity: 0.7;
+}
+
+/* Checkbox & Radio - MOBILE TOUCH OPTIMIZED */
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-sm);
+  padding-left: 0;
+}
+
+.form-check input[type="checkbox"],
+.form-check input[type="radio"] {
+  width: 22px;   /* Larger for touch */
+  height: 22px;  /* Larger for touch */
+  margin-right: 12px;
+  margin-top: 2px;
+  cursor: pointer;
+  flex-shrink: 0;
+  min-width: 22px;  /* Prevent shrinking */
+}
+
+.form-check label {
+  margin-bottom: 0;
+  font-weight: 400;
+  cursor: pointer;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.form-check a {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+/* Consent Checkbox */
+.consent-checkbox {
+  background-color: var(--background-light);
+  padding: 15px;
+  border-radius: var(--border-radius);
+  margin-bottom: 1.5rem;
+}
+
+/* Error States */
+.lead-capture-form input.error,
+.lead-capture-form select.error,
+.lead-capture-form textarea.error {
+  border-color: #dc3545;
+  background-color: #fff5f5;
+}
+
+.lead-capture-form input.error:focus,
+.lead-capture-form select.error:focus,
+.lead-capture-form textarea.error:focus {
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+/* Success States */
+.lead-capture-form input.success,
+.lead-capture-form select.success,
+.lead-capture-form textarea.success {
+  border-color: var(--success-color);
+}
+
+/* Field Error Message */
+.field-error {
+  color: #dc3545;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  display: none;
+}
+
+.field-error.show {
+  display: block;
+}
+
+/* Field Help Text */
+.field-help {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-top: 0.25rem;
+}
+
+/* Submit Button */
+.lead-capture-form button[type="submit"] {
+  width: 100%;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 700;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.lead-capture-form button[type="submit"]:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(207, 69, 32, 0.3);
+}
+
+.lead-capture-form button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+.lead-capture-form button[type="submit"]:disabled {
+  background-color: var(--text-light);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Button Loading State */
+.lead-capture-form button[type="submit"].loading {
+  pointer-events: none;
+  color: transparent;
+}
+
+.lead-capture-form button[type="submit"].loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 3px solid var(--white);
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spinner 0.8s linear infinite;
+}
+
+/* Form Header */
+.form-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-header h3 {
+  color: var(--secondary-color);
+  margin-bottom: 0.5rem;
+}
+
+.form-header p {
+  color: var(--text-light);
+}
+
+/* Privacy Notice */
+.privacy-notice {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.privacy-notice a {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+/* Two-Column Form Layout */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 576px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Form Progress Indicator */
+.form-progress {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.form-progress li {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.form-progress li::before {
+  content: '';
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin: 0 auto 0.5rem;
+  background-color: var(--border-color);
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+}
+
+.form-progress li.active::before {
+  background-color: var(--primary-color);
+}
+
+.form-progress li.completed::before {
+  background-color: var(--success-color);
+  content: '✓';
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.form-progress li::after {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background-color: var(--border-color);
+  z-index: 1;
+}
+
+.form-progress li:last-child::after {
+  display: none;
+}
+
+/* Input Icons */
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon input {
+  padding-left: 45px;
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+  font-size: 18px;
+  pointer-events: none;
+}
+
+/* Character Counter */
+.char-counter {
+  text-align: right;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-top: 0.25rem;
+}
+
+/* Floating Label Style (Optional) */
+.floating-label {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.floating-label input,
+.floating-label select,
+.floating-label textarea {
+  padding: 18px 16px 8px;
+}
+
+.floating-label label {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  pointer-events: none;
+  transition: var(--transition);
+  color: var(--text-light);
+  font-weight: 400;
+}
+
+.floating-label input:focus ~ label,
+.floating-label input:not(:placeholder-shown) ~ label,
+.floating-label select:focus ~ label,
+.floating-label select:not([value=""]) ~ label,
+.floating-label textarea:focus ~ label,
+.floating-label textarea:not(:placeholder-shown) ~ label {
+  top: 6px;
+  font-size: 0.75rem;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Auto-fill styling */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--white) inset;
+  -webkit-text-fill-color: var(--text-dark);
+  border-color: var(--primary-color);
+}
