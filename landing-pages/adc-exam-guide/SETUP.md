@@ -1,368 +1,299 @@
-# ADC Exam Guide Landing Page - Setup Guide
+# ADC Exam Guide - Landing Page Setup
 
-## Quick Setup (5 Minutes)
+## ✅ What's Complete
 
-### Step 1: Deploy Backend Infrastructure
+Your landing page is fully functional with **direct download** (no email required)!
 
-```bash
-cd terraform/campaigns-backend
+### Files Ready:
+- ✅ `index.html` - Main landing page with form
+- ✅ `thank-you.html` - Auto-download page
+- ✅ `../shared/js/form-handler.js` - Form submission logic
+- ✅ `assets/images/` - Folder for PDF cover preview
+- ✅ `assets/downloads/` - Folder for your PDF guide
 
-# Copy example config
-cp terraform.tfvars.example terraform.tfvars
+---
 
-# Edit with your values
-nano terraform.tfvars
+## 🚀 Quick Start (3 Steps)
 
-# Deploy (guided)
-make deploy
+### Step 1: Add Your PDF
+
+**Place your PDF guide here:**
+```
+landing-pages/adc-exam-guide/assets/downloads/guide.pdf
 ```
 
-### Step 2: Get Your API Endpoint
+**Requirements:**
+- File name: `guide.pdf` (exactly)
+- Format: PDF
+- Size: Under 5MB recommended
+- Content: Your 5-page "Cracking Clinical Cases" guide
 
-```bash
-# Copy this URL
-make endpoint
+---
 
-# Example output:
-# https://abc123.execute-api.ap-southeast-2.amazonaws.com/lead
+### Step 2: Add PDF Cover Preview Image (Optional)
+
+**Place cover image here:**
+```
+landing-pages/adc-exam-guide/assets/images/guide-cover.jpg
 ```
 
-### Step 3: Update Frontend
+**Requirements:**
+- File name: `guide-cover.jpg`
+- Dimensions: 595x842px (A4 ratio) or 1200x1697px (retina)
+- Format: JPG
+- Size: Under 200KB
 
-Edit `campaigns/landing-pages/shared/js/form-handler.js`:
+If you don't add this image, the landing page will show a broken image placeholder (non-critical).
+
+---
+
+### Step 3: Test Locally
+
+```bash
+# Navigate to the landing-pages folder (NOT adc-exam-guide!)
+cd landing-pages
+
+# Start a local server (Python 3)
+python -m http.server 8000
+
+# Or Python 2
+python -m SimpleHTTPServer 8000
+
+# Or Node.js
+npx http-server -p 8000
+
+# Open in browser - note the /adc-exam-guide/ path
+open http://localhost:8000/adc-exam-guide/
+```
+
+**Important:** You must serve from the `landing-pages/` directory (not from inside `adc-exam-guide/`) so the `../shared/` paths work correctly.
+
+**Test the flow:**
+1. Fill out the form
+2. Click "Download Free 4-Step Plan"
+3. Should redirect to `thank-you.html`
+4. PDF should auto-download after 2 seconds
+
+---
+
+## 🎯 How It Works
+
+### User Flow:
+
+```
+1. User visits: index.html
+         ↓
+2. Fills form (name, email, country)
+         ↓
+3. Clicks submit
+         ↓
+4. Form validates ✓
+         ↓
+5. Redirects to: thank-you.html?download=assets/downloads/guide.pdf
+         ↓
+6. Auto-downloads PDF after 2 seconds
+         ↓
+7. Done! User has the guide
+```
+
+### Technical Flow:
+
+**index.html:**
+- Displays form
+- Includes `form-handler.js`
+
+**form-handler.js:**
+- Validates form fields
+- On submit: redirects to `thank-you.html?download=assets/downloads/guide.pdf`
+
+**thank-you.html:**
+- Reads `?download=...` from URL
+- Auto-triggers download after 2 seconds
+- Shows success message
+- Tracks download event (GTM)
+
+---
+
+## 📁 File Structure
+
+```
+landing-pages/adc-exam-guide/
+├── index.html                     ← Main landing page
+├── thank-you.html                 ← Auto-download page
+├── assets/
+│   ├── downloads/
+│   │   ├── guide.pdf             ← YOUR PDF HERE
+│   │   └── README.md
+│   └── images/
+│       ├── guide-cover.jpg       ← PDF COVER IMAGE HERE
+│       └── README.md
+└── SETUP.md                       ← This file
+```
+
+---
+
+## 🔧 Configuration
+
+### Change PDF URL
+
+Edit: `landing-pages/shared/js/form-handler.js`
 
 ```javascript
 config: {
-  apiEndpoint: 'YOUR_API_ENDPOINT_HERE', // ← Paste URL from Step 2
-  downloadDelay: 1000
-},
+  // Local file
+  pdfUrl: 'assets/downloads/guide.pdf',
+
+  // Or S3/CDN URL
+  pdfUrl: 'https://cdn.prodenthub.com.au/guides/adc-guide.pdf',
+
+  thankYouPage: 'thank-you.html'
+}
 ```
 
-### Step 4: Upload PDF to S3
+### Add API Endpoint (Optional - for later)
 
-```bash
-cd terraform/campaigns-backend
-
-# Upload your PDF
-make upload-pdf
-
-# Or manually:
-aws s3 cp /path/to/ADC-Exam-Guide.pdf \
-  s3://$(terraform output -raw s3_bucket_name)/guides/adc-exam-guide.pdf
-```
-
-### Step 5: Configure DNS for SES
-
-```bash
-# Get DNS records
-make dns-config
-
-# Add these records to your DNS:
-# - 1 TXT record (domain verification)
-# - 3 CNAME records (DKIM)
-```
-
-Wait 10-30 minutes for DNS propagation.
-
-### Step 6: Test!
-
-```bash
-# Test the API
-make test
-
-# Or manually test the form on your landing page
-```
-
----
-
-## How It Works
-
-### User Flow
-
-```
-1. User fills form (firstName, lastName, email, country)
-        ↓
-2. Form submits to API Gateway
-        ↓
-3. Lambda processes:
-   - Validates data
-   - Saves to DynamoDB
-   - Generates presigned S3 URL (valid 24h)
-   - Sends email with 5 bonus resources
-   - Returns downloadUrl to frontend
-        ↓
-4. Frontend receives response:
-   - Shows success message
-   - Triggers PDF download automatically (1 second delay)
-   - Mentions email with bonus content
-        ↓
-5. User gets:
-   ✓ Immediate PDF download
-   ✓ Email with 5 additional resources
-```
-
-### What the User Sees
-
-**On Form Submission:**
-```
-✓ Success, John!
-
-↓ Your PDF download will start in 1 second...
-   If the download doesn't start, check your browser's download settings.
-
-───────────────────────────────────
-
-✉ Check your email!
-   We've sent you 5 additional free resources to help you ace the ADC exam.
-
-───────────────────────────────────
-
-What's Next?
-• Read the guide (30 minutes)
-• Create your study timeline
-• Start practicing with mock exams
-```
-
-**In Their Email:**
-```
-Hi John,
-
-Thanks for downloading our ADC Exam Guide! We hope it's already helping you.
-
-To help you succeed even further, here are 5 ADDITIONAL RESOURCES:
-
-📚 Resource #1: Free Video Masterclass
-   "Top 10 Mistakes ADC Candidates Make" - 45 min training
-   → Watch Now
-
-🎯 Resource #2: Interactive Study Planner
-   Customized timeline calculator based on your exam date
-   → Create Your Plan
-
-💡 Resource #3: Weekly ADC Tips (Email Series)
-   ✓ You're already subscribed!
-
-📊 Resource #4: Free Practice Questions
-   50 sample MCQs with detailed explanations
-   → Start Practicing
-
-🎧 Resource #5: ADC Success Podcast
-   Interviews with recently registered dentists
-   → Listen Now
-
-[CTA: Start Your Free Trial]
-```
-
----
-
-## Configuration
-
-### API Endpoint
-
-**Location:** `campaigns/landing-pages/shared/js/form-handler.js`
+If you want to store leads in a database:
 
 ```javascript
-const FormHandler = {
-  config: {
-    // UPDATE THIS after terraform deployment
-    apiEndpoint: 'https://your-api-id.execute-api.ap-southeast-2.amazonaws.com/lead',
-    downloadDelay: 1000 // ms before triggering download
-  },
-  // ...
+config: {
+  pdfUrl: 'assets/downloads/guide.pdf',
+  apiEndpoint: 'https://your-api-gateway.amazonaws.com/lead', // Add this
+  thankYouPage: 'thank-you.html'
 }
 ```
 
-### Email Resources
-
-**Location:** `terraform/campaigns-backend/email-templates/adc-exam-guide.html`
-
-Update the 5 resource links:
-- Resource #1: Masterclass URL
-- Resource #2: Study Planner URL
-- Resource #3: Email series (automatic)
-- Resource #4: Practice Questions URL
-- Resource #5: Podcast URL
-
-### Form Copy
-
-The form mentions "delivered to your email in 30 seconds" but downloads immediately.
-
-This is intentional psychology:
-- User expects email delivery
-- Gets surprised with instant download (better UX!)
-- Still checks email for bonus resources
-- Win-win: instant gratification + email engagement
+The form will:
+1. Submit data to API
+2. Then redirect to thank you page
 
 ---
 
-## Testing Checklist
+## 🌐 Deploy Options
 
-### Local Testing
+### Option A: Netlify (Easiest - Free)
 
-- [ ] Form validation works
-- [ ] Submit button shows loading state
-- [ ] Success message displays correctly
-- [ ] Download triggers automatically
-- [ ] Analytics events fire (check console)
+1. **Drag & Drop:**
+   - Go to https://app.netlify.com/drop
+   - Drag the `landing-pages/adc-exam-guide` folder
+   - Done! You get a URL like: `https://your-site.netlify.app`
 
-### Backend Testing
+2. **Or Git Deploy:**
+   ```bash
+   npm install -g netlify-cli
+   netlify deploy --prod --dir=landing-pages/adc-exam-guide
+   ```
+
+### Option B: Vercel (Also Easy - Free)
 
 ```bash
-# Test API endpoint
-curl -X POST "YOUR_API_ENDPOINT" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "firstName": "Test",
-    "lastName": "User",
-    "email": "test@example.com",
-    "country": "AU",
-    "campaign": "adc-exam-guide"
-  }'
-
-# Expected response:
-{
-  "success": true,
-  "message": "Success! Your download will start automatically.",
-  "downloadUrl": "https://s3.amazonaws.com/...",
-  "data": {
-    "email": "test@example.com",
-    "campaign": "adc-exam-guide",
-    "firstName": "Test",
-    "emailSent": true
-  }
-}
+npm install -g vercel
+cd landing-pages/adc-exam-guide
+vercel --prod
 ```
 
-### Email Testing
+### Option C: AWS S3 + CloudFront (Professional)
 
-1. Submit form with your real email
-2. Check inbox (and spam folder)
-3. Verify:
-   - [ ] Email arrives within 30 seconds
-   - [ ] All 5 resource links are correct
-   - [ ] Branding looks professional
-   - [ ] CTA buttons work
-
-### Production Testing
-
-- [ ] Test from mobile device
-- [ ] Test from different browsers (Chrome, Safari, Firefox)
-- [ ] Test with different email providers (Gmail, Outlook, etc.)
-- [ ] Verify download works on iOS Safari
-- [ ] Check CloudWatch logs for errors
-
----
-
-## Troubleshooting
-
-### Download doesn't start
-
-**Check:**
-1. Browser console for errors
-2. Pop-up blocker settings
-3. Download folder permissions
-
-**Fix:**
-- Add manual download button fallback
-- Check CORS settings in API Gateway
-
-### Email not received
-
-**Check:**
-1. Spam folder
-2. SES verification status: `make ses-status`
-3. Email in SES sandbox (can only send to verified addresses)
-
-**Fix:**
-- Request SES production access (if in sandbox)
-- Verify recipient email in SES console
-- Check CloudWatch logs: `make logs`
-
-### API returns 403 Forbidden
-
-**Check:**
-- CORS configuration in API Gateway
-- Allowed origins in `terraform.tfvars`
-
-**Fix:**
-```hcl
-# In terraform.tfvars
-allowed_origins = [
-  "https://prodenthub.com.au",
-  "http://localhost:5501"  # Add your domain
-]
-```
-
-### Rate limiting triggered
-
-**Check:**
-- Too many submissions from same IP/email
-- Rate limits in `terraform.tfvars`
-
-**Fix:**
-```hcl
-# Increase limits temporarily
-rate_limit_per_ip    = 10
-rate_limit_per_email = 5
-```
-
----
-
-## Monitoring
-
-### View Logs
-
+Use your existing infrastructure:
 ```bash
-# Lambda logs (live tail)
-make logs
-
-# API Gateway logs
-make logs-api
-
-# View in AWS Console
-make monitoring
+cd ../prodenthub-infrastructure/campaigns-backend
+make deploy
 ```
 
-### Check Metrics
-
-```bash
-# View all outputs
-make outputs
-
-# Check costs
-make costs
-
-# View leads in DynamoDB
-aws dynamodb scan --table-name $(terraform output -raw dynamodb_table_name)
-```
+Then upload landing page to the S3 bucket.
 
 ---
 
-## Next Steps
+## ✅ Pre-Flight Checklist
 
-### Marketing Integration
+Before going live:
 
-1. **Mailchimp:** Enable in `terraform.tfvars`
-2. **Facebook Pixel:** Add to landing page
-3. **Google Ads:** Track conversions
-
-### Additional Campaigns
-
-To create more landing pages:
-
-1. Copy `adc-exam-guide` folder
-2. Upload new PDF to S3
-3. Update `campaign` value in form
-4. Same backend works for all!
+- [ ] PDF guide is in `assets/downloads/guide.pdf`
+- [ ] Cover image is in `assets/images/guide-cover.jpg` (optional)
+- [ ] Tested locally - form submits correctly
+- [ ] PDF downloads automatically on thank-you page
+- [ ] Updated GTM ID in both HTML files (replace `GTM-XXXXXX`)
+- [ ] Updated privacy/terms links in footer
+- [ ] Tested on mobile device
+- [ ] Tested in different browsers (Chrome, Safari, Firefox)
 
 ---
 
-## Support
+## 🐛 Troubleshooting
 
-**Issues?** Check:
-- [Main README](../../../terraform/campaigns-backend/README.md) - Full documentation
-- CloudWatch logs - `make logs`
-- [GitHub Issues](https://github.com/...)
+### PDF doesn't download
 
-**Questions?**
-- Email: support@prodenthub.com.au
+**Check:**
+1. File exists at `assets/downloads/guide.pdf`
+2. File name is exactly `guide.pdf` (case-sensitive)
+3. Browser isn't blocking downloads (check settings)
+4. Open browser console (F12) - look for errors
+
+### Form doesn't submit
+
+**Check:**
+1. All required fields are filled
+2. Email format is valid
+3. Consent checkbox is checked
+4. Open browser console (F12) - look for JavaScript errors
+
+### Cover image doesn't show
+
+**Check:**
+1. File exists at `assets/images/guide-cover.jpg`
+2. File name matches exactly
+3. Image is valid JPG format
+4. Not critical - page works without it
+
+---
+
+## 📊 Analytics Tracking
+
+The landing page tracks:
+
+- ✅ Page views (GTM)
+- ✅ Form submissions (GTM event: `lead_capture`)
+- ✅ Thank you page views (GTM event: `thank_you_page_view`)
+- ✅ PDF downloads (GTM event: `pdf_download`)
+
+**To enable:**
+Replace `GTM-XXXXXX` with your actual Google Tag Manager ID in:
+- `index.html` (line 33)
+- `thank-you.html` (line 22)
+
+---
+
+## 🚀 Next Steps
+
+### Now:
+1. Add your PDF to `assets/downloads/guide.pdf`
+2. Add cover image to `assets/images/guide-cover.jpg`
+3. Test locally
+4. Deploy to Netlify/Vercel
+
+### Later (Optional):
+1. Set up AWS infrastructure for lead storage
+2. Configure SES for email notifications
+3. Add your custom domain
+4. Enable SSL certificate
+5. Set up email autoresponder sequence
+
+---
+
+## 📞 Need Help?
+
+**Issue:** Something not working?
+**Solution:** Check browser console (F12) for error messages
+
+**Issue:** Want to add email delivery?
+**Solution:** Configure AWS SES + Lambda (see infrastructure repo)
+
+**Issue:** Want to store leads in database?
+**Solution:** Add API endpoint configuration
+
+---
+
+**Status:** ✅ Ready to deploy!
+**Estimated setup time:** 10 minutes
+**Deployment time:** 5 minutes
+
+Good luck with your campaign! 🎉

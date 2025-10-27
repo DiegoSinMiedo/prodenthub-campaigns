@@ -5,7 +5,9 @@
       "Bash(cp:*)",
       "Bash(rm:*)",
       "Bash(tree:*)",
-      "Read(//c/Users/sinmiedo/Desktop/Proyectos/PRODENTHUB/prodenthub.com.au.repo/**)"
+      "Read(//c/Users/sinmiedo/Desktop/Proyectos/PRODENTHUB/prodenthub.com.au.repo/**)",
+      "Bash(python -m http.server:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []

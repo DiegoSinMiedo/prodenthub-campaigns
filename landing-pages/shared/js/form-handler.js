@@ -6,16 +6,14 @@
 const FormHandler = {
   // Configuration
   config: {
-    // TODO: Replace with actual API Gateway endpoint after Terraform deployment
-    // Get this from: terraform output -raw lead_capture_url
-    apiEndpoint: 'YOUR_API_GATEWAY_ENDPOINT_HERE',
+    // PDF download URL - update this with your S3/CDN URL
+    pdfUrl: 'assets/downloads/Volume 01 - Cracking Clinical Cases - ProDentHub Guides Collections - V0.1.pdf',
 
-    // For local testing, you can detect environment:
-    // apiEndpoint: window.location.hostname.includes('localhost')
-    //   ? 'http://localhost:3000/lead'
-    //   : 'https://your-api-id.execute-api.ap-southeast-2.amazonaws.com/lead'
+    // Optional: API endpoint for lead storage (can be added later)
+    apiEndpoint: null, // Set to null to skip API call
 
-    downloadDelay: 1000 // Delay before triggering download (ms)
+    // Redirect to thank you page after submission
+    thankYouPage: 'thank-you.html'
   },
 
   // Field validation rules
@@ -76,47 +74,40 @@ const FormHandler = {
     // Get form data
     const formData = FormValidator.getFormData(form);
 
-    // Add UTM parameters and tracking data
-    const trackingData = TrackingManager.getUTMParameters();
-    const submitData = {
-      ...formData,
-      ...trackingData,
-      campaign: this.getCampaignName(),
-      timestamp: new Date().toISOString(),
-      referrer: document.referrer,
-      userAgent: navigator.userAgent
-    };
-
     // Show loading state
     this.setLoading(form, true);
     this.hideMessage(form);
 
     try {
-      // Submit to API
-      const response = await this.submitToAPI(submitData);
+      // Optional: Submit to API if endpoint is configured
+      if (this.config.apiEndpoint) {
+        const trackingData = TrackingManager.getUTMParameters();
+        const submitData = {
+          ...formData,
+          ...trackingData,
+          campaign: this.getCampaignName(),
+          timestamp: new Date().toISOString(),
+          referrer: document.referrer,
+          userAgent: navigator.userAgent
+        };
 
-      if (response.success) {
-        // Track successful submission
-        TrackingManager.trackFormSubmit('lead_capture', {
-          leadId: response.data?.timestamp || Date.now(),
-          email: response.data?.email
-        });
-
-        // Immediate download flow
-        if (response.downloadUrl) {
-          this.handleImmediateDownload(form, response);
-        } else {
-          this.showMessage(form, 'Thank you! Check your email for the download link.', 'success');
-        }
-      } else {
-        throw new Error(response.error || 'Submission failed');
+        await this.submitToAPI(submitData);
       }
+
+      // Track successful submission
+      TrackingManager.trackFormSubmit('lead_capture', {
+        leadId: Date.now(),
+        email: formData.email
+      });
+
+      // Redirect to thank you page with download URL
+      const downloadUrl = encodeURIComponent(this.config.pdfUrl);
+      window.location.href = `${this.config.thankYouPage}?download=${downloadUrl}`;
 
     } catch (error) {
       console.error('[FormHandler] Submission error:', error);
       TrackingManager.trackError('submission_failed', error.message);
       this.showMessage(form, 'Something went wrong. Please try again.', 'error');
-    } finally {
       this.setLoading(form, false);
     }
   },
