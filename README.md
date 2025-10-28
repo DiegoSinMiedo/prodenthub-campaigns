@@ -1,29 +1,38 @@
-# Pro DentHub - Marketing Campaigns
+# ProDentHub - Marketing Campaigns
 
-Landing pages and marketing campaigns for Pro DentHub ADC exam preparation platform.
+Landing pages and marketing campaigns for ProDentHub ADC exam preparation platform.
 
 ## 🎯 Purpose
 
-This repository contains all marketing landing pages designed for lead capture and conversion. Each campaign has its own folder with standalone HTML/CSS/JS files.
+This repository contains marketing landing pages designed for lead capture and conversion. Each campaign is standalone with its own HTML/CSS/JS files.
 
 ## 📁 Structure
 
 ```
 prodenthub-campaigns/
-├─ landing-pages/
-│  ├─ adc-exam-guide/          # Free guide download campaign
-│  │  ├─ index.html
-│  │  ├─ thank-you.html
-│  │  ├─ SETUP.md
-│  │  └─ FLOW.md
-│  ├─ clinical-cases-ebook/    # Clinical cases ebook
-│  ├─ webinar-registration/    # Webinar signups
-│  └─ shared/                  # Shared assets
-│     ├─ css/
-│     ├─ js/
-│     └─ img/
-└─ assets/
-   └─ pdfs/                    # Downloadable PDFs
+├── .gitignore
+├── README.md
+└── landing-pages/
+    ├── README.md
+    ├── adc-exam-guide/          # "Cracking Clinical Cases" guide
+    │   ├── index.html           # Main landing page
+    │   ├── thank-you.html       # Post-submission page
+    │   └── assets/
+    │       ├── images/
+    │       │   ├── guide-cover.jpg      # Form preview image
+    │       │   └── og-image.jpg         # Social sharing image
+    │       └── downloads/
+    │           └── [PDF files - not in repo]
+    └── shared/                  # Shared assets across campaigns
+        ├── css/
+        │   ├── landing-base.css
+        │   └── form-styles.css
+        ├── js/
+        │   ├── form-handler.js
+        │   ├── tracking.js
+        │   └── validation.js
+        └── assets/
+            └── icons/
 ```
 
 ## 🚀 Quick Start
@@ -31,65 +40,81 @@ prodenthub-campaigns/
 ### Local Development
 
 ```bash
-# Clone the repository
-git clone https://github.com/YOUR_USERNAME/prodenthub-campaigns.git
-cd prodenthub-campaigns
+# Navigate to landing-pages directory
+cd landing-pages
 
-# Open any landing page with Live Server
-# Or use Python:
+# Run local server (from landing-pages/ directory)
 python -m http.server 8000
 
-# Navigate to:
-# http://localhost:8000/landing-pages/adc-exam-guide/
+# Open in browser:
+# http://localhost:8000/adc-exam-guide/
 ```
+
+**Important:** Run the server from `landing-pages/` directory, not from inside a campaign folder, so relative paths to `../shared/` work correctly.
 
 ### Deployment
 
-**Automatic (GitHub Actions):**
-- Push to `main` branch triggers automatic deployment to S3
-
-**Manual:**
+**Manual Deployment to S3:**
 ```bash
-# Sync to S3
-aws s3 sync landing-pages/ s3://prodenthub-campaigns-production/
+# Upload campaign files
+aws s3 sync landing-pages/adc-exam-guide/ s3://prodenthub-campaigns/adc-exam-guide/ \
+  --exclude "*.md" \
+  --exclude "assets/downloads/*"
+
+# Upload shared assets
+aws s3 sync landing-pages/shared/ s3://prodenthub-campaigns/shared/
 
 # Invalidate CloudFront cache
 aws cloudfront create-invalidation \
-  --distribution-id YOUR_DISTRIBUTION_ID \
+  --distribution-id E1YJ6ILP0FVA5W \
   --paths "/*"
 ```
 
 ## 📊 Current Campaigns
 
-| Campaign | Status | Conversion Rate | Total Leads |
-|----------|--------|-----------------|-------------|
-| ADC Exam Guide | 🟢 Live | 28% | 1,247 |
-| Clinical Cases eBook | 🟡 Testing | - | - |
-| Webinar Registration | 🔴 Draft | - | - |
+| Campaign | URL | Status | Campaign ID |
+|----------|-----|--------|-------------|
+| Cracking Clinical Cases | [campaigns.prodenthub.com.au/adc-exam-guide/](https://campaigns.prodenthub.com.au/adc-exam-guide/) | 🟢 Live | `cracking-clinical-cases` |
 
 ## 🔧 Tech Stack
 
-- **Framework:** Bootstrap 5.3.3
+- **Frontend:** Vanilla HTML/CSS/JavaScript
+- **Styling:** Bootstrap 5.3.3
 - **Icons:** Bootstrap Icons 1.11.3
-- **Analytics:** Google Tag Manager + Google Analytics
-- **Tracking:** Hotjar (optional)
-- **Hosting:** AWS S3 + CloudFront
-- **Backend:** Serverless (see [prodenthub-infrastructure](https://github.com/YOUR_USERNAME/prodenthub-infrastructure))
+- **Analytics:** Google Tag Manager (GTM-P95LCCG6)
+- **CDN:** AWS CloudFront
+- **Hosting:** AWS S3
+- **Backend API:** AWS Lambda + API Gateway
+- **Database:** DynamoDB
 
 ## 📝 Creating New Campaign
 
-1. Copy an existing campaign folder as template
-2. Update content and copy
-3. Configure form submission endpoint (from infrastructure repo)
-4. Test locally
-5. Push to main for automatic deployment
+1. **Copy existing campaign folder:**
+   ```bash
+   cp -r landing-pages/adc-exam-guide/ landing-pages/new-campaign/
+   ```
 
-See [Creating New Campaign Guide](docs/creating-new-campaign.md) for details.
+2. **Update campaign ID:**
+   - Change hidden form field: `<input name="campaign" value="new-campaign-id">`
+   - Update analytics tracking in `thank-you.html`
+
+3. **Update Lambda PDF mapping:**
+   - Add to `prodenthub-infrastructure/campaigns-backend/lambda/lead-capture/index.js`
+   - Upload PDF to S3: `s3://prodenthub-campaign-pdfs-production/guides/new-campaign-id.pdf`
+
+4. **Test locally** then deploy to S3
+
+## 🎨 Brand Guidelines
+
+- **Primary Color:** #cf4520 (Orange-Red)
+- **Font:** System fonts (optimized for performance)
+- **Form Fields:** First Name, Last Name, Email, Country
+- **Privacy:** Links to privacy policy and terms
 
 ## 🔗 Related Repositories
 
-- **Main Website:** [prodenthub.com.au](https://github.com/YOUR_USERNAME/prodenthub.com.au)
-- **Infrastructure:** [prodenthub-infrastructure](https://github.com/YOUR_USERNAME/prodenthub-infrastructure)
+- **Infrastructure:** [prodenthub-infrastructure](../prodenthub-infrastructure)
+- **Main Website:** [prodenthub.com.au](https://prodenthub.com.au)
 
 ## 📧 Support
 
@@ -97,4 +122,4 @@ Questions? Contact: d.villagran.castro@gmail.com
 
 ---
 
-**Pro DentHub** - Helping dentists ace the ADC exam since 2024
+**ProDentHub** - Helping dentists ace the ADC exam since 2024
