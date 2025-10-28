@@ -37,3 +37,24 @@ temp/
 .AppleDouble
 .LSOverride
 landing-pages/adc-exam-guide/assets/downloads/Volume 01 - Cracking Clinical Cases - ProDentHub Guides Collections - V0.1.pdf
+
+# Generated/Temporary files
+*.zip
+*-from-s3.*
+
+# Documentation/guide files (keep only README.md)
+*-GUIDE.md
+*-SETUP.md
+*-COMPLETE.md
+*-STATUS.md
+*-INSTRUCTIONS.md
+FLOW.md
+DEPLOYMENT*.md
+*-ERROR.md
+
+# AWS config files (generated)
+cloudfront-distribution-config.json
+bucket-policy.json
+
+# Deployment scripts
+deploy-to-s3.sh

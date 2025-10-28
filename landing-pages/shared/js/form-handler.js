@@ -9,8 +9,8 @@ const FormHandler = {
     // PDF download URL - update this with your S3/CDN URL
     pdfUrl: 'assets/downloads/Volume 01 - Cracking Clinical Cases - ProDentHub Guides Collections - V0.1.pdf',
 
-    // Optional: API endpoint for lead storage (can be added later)
-    apiEndpoint: null, // Set to null to skip API call
+    // API endpoint for lead storage
+    apiEndpoint: 'https://4bgjnc31f8.execute-api.ap-southeast-2.amazonaws.com/lead',
 
     // Redirect to thank you page after submission
     thankYouPage: 'thank-you.html'
