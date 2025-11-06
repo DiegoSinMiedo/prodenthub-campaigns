@@ -34,26 +34,20 @@ const PriceCalculator = {
     },
 
     /**
-     * Calculate team pricing (split among members)
-     * @param {number} memberCount - Number of team members (2-5)
+     * Calculate team pricing (2-person teams only)
      * @returns {Object} Team pricing breakdown
      */
-    calculateTeamPrice: function(memberCount) {
-        const totalPrice = this.pricing.team.full6months;
-
-        if (memberCount < 2 || memberCount > 5) {
-            return {
-                error: 'Team must have 2-5 members'
-            };
-        }
-
-        const pricePerMember = totalPrice / memberCount;
+    calculateTeamPrice: function() {
+        const totalPrice = this.pricing.team.full6months; // $299
+        const memberCount = 2; // Always 2 people
+        const pricePerMember = totalPrice / memberCount; // $149.50
 
         return {
             totalPrice: totalPrice,
             memberCount: memberCount,
             pricePerMember: parseFloat(pricePerMember.toFixed(2)),
             savings: parseFloat(((199 - pricePerMember) * memberCount).toFixed(2)), // vs individual plan
+            savingsPerPerson: parseFloat((199 - pricePerMember).toFixed(2)), // $49.50 each
             formattedTotal: this.formatCurrency(totalPrice),
             formattedPerMember: this.formatCurrency(pricePerMember)
         };

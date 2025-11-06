@@ -8,24 +8,24 @@ This document outlines the design for 5 new fixed campaigns with Stripe payment 
 ## 1. Team Creation Campaign (`team-creation`)
 
 ### Purpose
-Allow users to create teams, split payment among team members, and get access to the full version for 6 months.
+Allow 2 people to sign up together and split the cost of full version access for 6 months.
 
 ### Frontend Form Fields
-- **Team Leader Information:**
+- **Person 1 (You):**
   - First Name (required)
   - Last Name (required)
-  - Email (required, will be team admin)
+  - Email (required)
   - Country (required)
 
-- **Team Members (2-5 members):**
-  - Member Name (required)
-  - Member Email (required)
-  - Dynamic add/remove member buttons
+- **Person 2 (Study Partner):**
+  - Partner's Full Name (required)
+  - Partner's Email (required)
 
 - **Plan Details:**
   - Fixed: Full Version 6 Months
-  - Price: $299 AUD total (split among team members)
-  - Price per member: Calculated dynamically based on team size
+  - Price: $299 AUD total
+  - Price per person: $149.50 AUD (50% split)
+  - Savings: $49.50 per person vs individual plan ($199)
 
 ### DynamoDB Schema
 
@@ -34,24 +34,23 @@ Allow users to create teams, split payment among team members, and get access to
 {
   "teamId": "team_UUID (PK)",
   "campaignId": "team-creation",
-  "leaderEmail": "leader@example.com",
-  "leaderFirstName": "John",
-  "leaderLastName": "Doe",
-  "country": "Australia",
-  "members": [
-    {
-      "name": "Member 1",
-      "email": "member1@example.com",
-      "status": "pending|paid|active",
-      "shareAmount": 99.67,
-      "stripePaymentIntentId": "pi_xxx"
-    }
-  ],
-  "totalMembers": 3,
+  "person1": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john@example.com",
+    "country": "Australia",
+    "status": "pending|paid|active"
+  },
+  "person2": {
+    "name": "Jane Smith",
+    "email": "jane@example.com",
+    "status": "pending|paid|active"
+  },
+  "totalMembers": 2,
   "planType": "full-6months",
   "totalAmount": 299.00,
-  "pricePerMember": 99.67,
-  "status": "created|partially_paid|fully_paid|active",
+  "pricePerPerson": 149.50,
+  "status": "created|fully_paid|active",
   "createdAt": "2025-01-06T10:30:00Z",
   "activatedAt": "2025-01-06T11:00:00Z",
   "expiresAt": "2025-07-06T11:00:00Z",
@@ -63,7 +62,8 @@ Allow users to create teams, split payment among team members, and get access to
 ```
 
 **GSI:**
-- `leaderEmail-index` (HASH: leaderEmail)
+- `person1Email-index` (HASH: person1.email) - Query by person 1's email
+- `person2Email-index` (HASH: person2.email) - Query by person 2's email
 - `status-createdAt-index` (HASH: status, RANGE: createdAt)
 
 ### Stripe Integration
