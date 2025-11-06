@@ -52,14 +52,23 @@ exports.handler = async (event) => {
 
 async function createTeam(event, headers) {
     const body = JSON.parse(event.body);
-    const { leader, members, pricing, planType } = body;
+    const { person1, person2, totalPrice, pricePerPerson, planType } = body;
 
-    // Validate
-    if (!leader || !members || members.length < 1 || members.length > 4) {
+    // Validate - must be exactly 2 people
+    if (!person1 || !person2) {
         return {
             statusCode: 400,
             headers,
-            body: JSON.stringify({ error: 'Invalid team data. Must have 1-4 members plus leader.' })
+            body: JSON.stringify({ error: 'Invalid team data. Must have exactly 2 people.' })
+        };
+    }
+
+    // Validate different emails
+    if (person1.email.toLowerCase() === person2.email.toLowerCase()) {
+        return {
+            statusCode: 400,
+            headers,
+            body: JSON.stringify({ error: 'Both people must have different email addresses.' })
         };
     }
 
@@ -73,20 +82,22 @@ async function createTeam(event, headers) {
     const teamRecord = {
         teamId,
         campaignId: 'team-creation',
-        leaderEmail: leader.email,
-        leaderFirstName: leader.firstName,
-        leaderLastName: leader.lastName,
-        country: leader.country,
-        members: members.map(m => ({
-            name: m.name,
-            email: m.email,
-            status: 'pending',
-            shareAmount: pricing.pricePerMember
-        })),
-        totalMembers: members.length + 1,
+        person1: {
+            firstName: person1.firstName,
+            lastName: person1.lastName,
+            email: person1.email,
+            country: person1.country,
+            status: 'pending'
+        },
+        person2: {
+            name: person2.name,
+            email: person2.email,
+            status: 'pending'
+        },
+        totalMembers: 2,
         planType: planType || 'full-6months',
-        totalAmount: pricing.totalPrice,
-        pricePerMember: pricing.pricePerMember,
+        totalAmount: totalPrice || 299.00,
+        pricePerPerson: pricePerPerson || 149.50,
         status: 'created',
         createdAt: now,
         expiresAt: expiresAt.toISOString()
@@ -104,7 +115,7 @@ async function createTeam(event, headers) {
         headers,
         body: JSON.stringify({
             teamId,
-            message: 'Team created successfully',
+            message: 'Team created successfully (2-person team)',
             team: teamRecord
         })
     };

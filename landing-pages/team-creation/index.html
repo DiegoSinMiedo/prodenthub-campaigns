@@ -31,15 +31,15 @@
                     </h1>
 
                     <p class="lead mb-4">
-                        Team up with fellow dentists and split the cost! Get full access to ProDentHub for 6 months.
+                        Study together and split the cost! Get full access to ProDentHub for 6 months - just you and a study partner.
                     </p>
 
                     <div class="feature-list mb-4">
                         <div class="feature-item d-flex align-items-start mb-3">
                             <i class="bi bi-check-circle-fill text-success fs-4 me-3"></i>
                             <div>
-                                <h5 class="mb-1">Split the Cost</h5>
-                                <p class="text-muted mb-0">$299 total divided among 2-5 team members</p>
+                                <h5 class="mb-1">Split the Cost in Half</h5>
+                                <p class="text-muted mb-0">$299 total = $149.50 per person</p>
                             </div>
                         </div>
 
@@ -54,34 +54,34 @@
                         <div class="feature-item d-flex align-items-start mb-3">
                             <i class="bi bi-graph-up-arrow text-primary fs-4 me-3"></i>
                             <div>
-                                <h5 class="mb-1">Team Progress Tracking</h5>
-                                <p class="text-muted mb-0">Collaborate and motivate each other</p>
+                                <h5 class="mb-1">Study Partner Progress</h5>
+                                <p class="text-muted mb-0">See each other's progress and stay motivated</p>
                             </div>
                         </div>
 
                         <div class="feature-item d-flex align-items-start mb-3">
-                            <i class="bi bi-shield-check text-info fs-4 me-3"></i>
+                            <i class="bi bi-cash-coin text-success fs-4 me-3"></i>
                             <div>
-                                <h5 class="mb-1">Flexible Payment</h5>
-                                <p class="text-muted mb-0">Leader pays upfront or individual payment links</p>
+                                <h5 class="mb-1">Save $49.50 Each</h5>
+                                <p class="text-muted mb-0">Compared to individual 6-month plan ($199)</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="pricing-example bg-light p-4 rounded-3 mb-4">
-                        <h5 class="mb-3">Pricing Example</h5>
+                        <h5 class="mb-3">Pricing Comparison</h5>
                         <div class="d-flex justify-content-between mb-2">
                             <span>Individual 6-month plan:</span>
                             <strong>$199 AUD</strong>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
-                            <span>Team of 3 (per person):</span>
-                            <strong class="text-success">$99.67 AUD</strong>
+                            <span>Team of 2 (per person):</span>
+                            <strong class="text-success">$149.50 AUD</strong>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between">
                             <span class="fw-bold">You save:</span>
-                            <strong class="text-success fs-5">$99.33 AUD</strong>
+                            <strong class="text-success fs-5">$49.50 AUD each</strong>
                         </div>
                     </div>
                 </div>
@@ -91,17 +91,17 @@
             <div class="col-lg-6 form-column d-flex align-items-center justify-content-center p-5">
                 <div class="form-container">
                     <div class="form-header text-center mb-4">
-                        <h2 class="h3 mb-2">Create Your Team</h2>
-                        <p class="text-muted">Add your team members below (2-5 members)</p>
+                        <h2 class="h3 mb-2">Sign Up Together</h2>
+                        <p class="text-muted">You + one study partner = split the cost</p>
                     </div>
 
                     <form id="team-creation-form" class="needs-validation" novalidate>
                         <input type="hidden" name="campaign" value="team-creation">
 
-                        <!-- Team Leader Section -->
+                        <!-- Person 1 Section -->
                         <div class="section-header mb-3">
                             <h4 class="h5 mb-0">
-                                <i class="bi bi-person-badge"></i> Team Leader
+                                <i class="bi bi-person-fill"></i> Person 1 (You)
                             </h4>
                         </div>
 
@@ -109,13 +109,13 @@
                             <div class="col-md-6 mb-3">
                                 <label for="firstName" class="form-label">First Name *</label>
                                 <input type="text" class="form-control" id="firstName" name="firstName" required minlength="2" maxlength="50">
-                                <div class="invalid-feedback">Please enter your first name (2-50 characters)</div>
+                                <div class="invalid-feedback">Please enter your first name</div>
                             </div>
 
                             <div class="col-md-6 mb-3">
                                 <label for="lastName" class="form-label">Last Name *</label>
                                 <input type="text" class="form-control" id="lastName" name="lastName" required minlength="2" maxlength="50">
-                                <div class="invalid-feedback">Please enter your last name (2-50 characters)</div>
+                                <div class="invalid-feedback">Please enter your last name</div>
                             </div>
                         </div>
 
@@ -141,39 +141,32 @@
                             <div class="invalid-feedback">Please select your country</div>
                         </div>
 
-                        <!-- Team Members Section -->
+                        <!-- Person 2 Section -->
                         <div class="section-header mb-3">
                             <h4 class="h5 mb-0">
-                                <i class="bi bi-people"></i> Team Members
+                                <i class="bi bi-person-fill"></i> Person 2 (Your Study Partner)
                             </h4>
                         </div>
 
-                        <div id="team-members-container">
-                            <!-- Member 1 -->
-                            <div class="team-member-card mb-3" data-member="1">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <strong>Member 1</strong>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-2">
-                                        <input type="text" class="form-control member-name" placeholder="Full Name *" required>
-                                    </div>
-                                    <div class="col-md-6 mb-2">
-                                        <input type="email" class="form-control member-email" placeholder="Email *" required>
-                                    </div>
-                                </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="partnerName" class="form-label">Partner's Full Name *</label>
+                                <input type="text" class="form-control" id="partnerName" name="partnerName" required minlength="2" maxlength="100">
+                                <div class="invalid-feedback">Please enter partner's full name</div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="partnerEmail" class="form-label">Partner's Email *</label>
+                                <input type="email" class="form-control" id="partnerEmail" name="partnerEmail" required>
+                                <div class="invalid-feedback">Please enter a valid email address</div>
                             </div>
                         </div>
-
-                        <button type="button" id="add-member-btn" class="btn btn-outline-primary btn-sm mb-4">
-                            <i class="bi bi-plus-circle"></i> Add Team Member
-                        </button>
 
                         <!-- Price Summary -->
                         <div class="price-summary bg-light p-3 rounded-3 mb-4">
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Total Team Size:</span>
-                                <strong id="total-members">2</strong>
+                                <strong>2 people</strong>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Total Price:</span>
@@ -181,8 +174,8 @@
                             </div>
                             <hr class="my-2">
                             <div class="d-flex justify-content-between">
-                                <span class="fw-bold">Price per Member:</span>
-                                <strong class="text-success fs-5" id="price-per-member">$149.50 AUD</strong>
+                                <span class="fw-bold">Price per Person:</span>
+                                <strong class="text-success fs-5">$149.50 AUD</strong>
                             </div>
                         </div>
 

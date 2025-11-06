@@ -1,165 +1,49 @@
 /**
- * Team Creation Campaign Handler
- * Handles team member management, pricing calculation, and payment processing
+ * Team Creation Campaign Handler (2-Person Teams)
+ * Handles 2-person team creation with payment splitting
  */
 
 const TeamHandler = {
-    currentMemberCount: 1,
-    maxMembers: 5,
-    minMembers: 2,
-
     init: function() {
         this.attachEventListeners();
-        this.updatePricingSummary();
-        console.log('TeamHandler initialized');
+        console.log('TeamHandler initialized (2-person teams)');
     },
 
     attachEventListeners: function() {
-        // Form submission
         const form = document.getElementById('team-creation-form');
         if (form) {
             form.addEventListener('submit', this.handleSubmit.bind(this));
         }
-
-        // Add member button
-        const addBtn = document.getElementById('add-member-btn');
-        if (addBtn) {
-            addBtn.addEventListener('click', this.addTeamMember.bind(this));
-        }
-
-        // Initial member count
-        this.updateAddButtonState();
-    },
-
-    addTeamMember: function() {
-        if (this.currentMemberCount >= this.maxMembers) {
-            alert(`Maximum ${this.maxMembers} team members allowed`);
-            return;
-        }
-
-        this.currentMemberCount++;
-        const memberNumber = this.currentMemberCount;
-
-        const memberCard = this.createMemberCard(memberNumber);
-        document.getElementById('team-members-container').insertAdjacentHTML('beforeend', memberCard);
-
-        // Attach remove button listener
-        const removeBtn = document.querySelector(`[data-member="${memberNumber}"] .remove-member-btn`);
-        if (removeBtn) {
-            removeBtn.addEventListener('click', () => this.removeMember(memberNumber));
-        }
-
-        this.updatePricingSummary();
-        this.updateAddButtonState();
-    },
-
-    createMemberCard: function(memberNumber) {
-        return `
-            <div class="team-member-card mb-3" data-member="${memberNumber}">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <strong>Member ${memberNumber}</strong>
-                    <button type="button" class="btn btn-sm btn-outline-danger remove-member-btn">
-                        <i class="bi bi-x-circle"></i> Remove
-                    </button>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-2">
-                        <input type="text" class="form-control member-name" placeholder="Full Name *" required>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <input type="email" class="form-control member-email" placeholder="Email *" required>
-                    </div>
-                </div>
-            </div>
-        `;
-    },
-
-    removeMember: function(memberNumber) {
-        const memberCard = document.querySelector(`[data-member="${memberNumber}"]`);
-        if (memberCard) {
-            memberCard.remove();
-            this.currentMemberCount--;
-            this.renumberMembers();
-            this.updatePricingSummary();
-            this.updateAddButtonState();
-        }
-    },
-
-    renumberMembers: function() {
-        const memberCards = document.querySelectorAll('.team-member-card');
-        memberCards.forEach((card, index) => {
-            const memberNumber = index + 1;
-            card.setAttribute('data-member', memberNumber);
-            card.querySelector('strong').textContent = `Member ${memberNumber}`;
-        });
-        this.currentMemberCount = memberCards.length;
-    },
-
-    updateAddButtonState: function() {
-        const addBtn = document.getElementById('add-member-btn');
-        if (addBtn) {
-            if (this.currentMemberCount >= this.maxMembers) {
-                addBtn.disabled = true;
-                addBtn.innerHTML = '<i class="bi bi-info-circle"></i> Maximum team size reached';
-            } else {
-                addBtn.disabled = false;
-                addBtn.innerHTML = '<i class="bi bi-plus-circle"></i> Add Team Member';
-            }
-        }
-    },
-
-    updatePricingSummary: function() {
-        const totalMembers = this.currentMemberCount + 1; // +1 for leader
-        const pricing = PriceCalculator.calculateTeamPrice(totalMembers);
-
-        if (pricing.error) {
-            console.error(pricing.error);
-            return;
-        }
-
-        // Update display
-        document.getElementById('total-members').textContent = totalMembers;
-        document.getElementById('price-per-member').textContent = pricing.formattedPerMember;
     },
 
     collectFormData: function() {
         const form = document.getElementById('team-creation-form');
 
-        // Leader information
-        const leaderData = {
+        // Person 1 (You)
+        const person1 = {
             firstName: form.querySelector('#firstName').value.trim(),
             lastName: form.querySelector('#lastName').value.trim(),
             email: form.querySelector('#email').value.trim(),
             country: form.querySelector('#country').value
         };
 
-        // Team members
-        const members = [];
-        const memberCards = document.querySelectorAll('.team-member-card');
+        // Person 2 (Study Partner)
+        const person2 = {
+            name: form.querySelector('#partnerName').value.trim(),
+            email: form.querySelector('#partnerEmail').value.trim()
+        };
 
-        memberCards.forEach((card, index) => {
-            const name = card.querySelector('.member-name').value.trim();
-            const email = card.querySelector('.member-email').value.trim();
-
-            if (name && email) {
-                members.push({
-                    name: name,
-                    email: email,
-                    status: 'pending'
-                });
-            }
-        });
-
-        // Calculate pricing
-        const totalMembers = members.length + 1; // +1 for leader
-        const pricing = PriceCalculator.calculateTeamPrice(totalMembers);
+        // Calculate pricing for 2 people
+        const totalPrice = 299.00;
+        const pricePerPerson = totalPrice / 2; // $149.50
 
         return {
             campaignId: 'team-creation',
-            leader: leaderData,
-            members: members,
-            totalMembers: totalMembers,
-            pricing: pricing,
+            person1: person1,
+            person2: person2,
+            totalMembers: 2,
+            totalPrice: totalPrice,
+            pricePerPerson: pricePerPerson,
             planType: 'full-6months',
             consent: form.querySelector('#consent').checked
         };
@@ -174,27 +58,14 @@ const TeamHandler = {
             return false;
         }
 
-        // Check minimum team size
-        const totalMembers = this.currentMemberCount + 1;
-        if (totalMembers < this.minMembers) {
-            alert(`Minimum team size is ${this.minMembers} members (including leader)`);
+        // Validate that both emails are different
+        const email1 = form.querySelector('#email').value.trim().toLowerCase();
+        const email2 = form.querySelector('#partnerEmail').value.trim().toLowerCase();
+
+        if (email1 === email2) {
+            alert('Both people must have different email addresses!');
             return false;
         }
-
-        // Validate all member emails are unique
-        const emails = [form.querySelector('#email').value.trim()];
-        const memberCards = document.querySelectorAll('.team-member-card');
-
-        memberCards.forEach(card => {
-            const email = card.querySelector('.member-email').value.trim();
-            if (email) {
-                if (emails.includes(email)) {
-                    alert('All team member emails must be unique!');
-                    throw new Error('Duplicate email found');
-                }
-                emails.push(email);
-            }
-        });
 
         return true;
     },
@@ -217,21 +88,24 @@ const TeamHandler = {
             if (typeof TrackingManager !== 'undefined') {
                 TrackingManager.trackEvent('form_submit', {
                     campaign: 'team-creation',
-                    totalMembers: teamData.totalMembers,
-                    amount: teamData.pricing.totalPrice
+                    totalMembers: 2,
+                    amount: teamData.totalPrice
                 });
             }
 
             // Process payment with Stripe
-            await StripeHandler.processPayment(teamData.leader, {
+            await StripeHandler.processPayment(teamData.person1, {
                 campaignId: 'team-creation',
-                amount: teamData.pricing.totalPrice,
+                amount: teamData.totalPrice,
                 currency: 'AUD',
                 metadata: {
-                    teamId: 'will_be_generated_by_backend',
-                    totalMembers: teamData.totalMembers,
-                    pricePerMember: teamData.pricing.pricePerMember,
-                    members: JSON.stringify(teamData.members)
+                    person1FirstName: teamData.person1.firstName,
+                    person1LastName: teamData.person1.lastName,
+                    person1Email: teamData.person1.email,
+                    person2Name: teamData.person2.name,
+                    person2Email: teamData.person2.email,
+                    totalMembers: 2,
+                    pricePerPerson: teamData.pricePerPerson
                 },
                 successUrl: window.location.origin + '/team-creation/thank-you.html?session_id={CHECKOUT_SESSION_ID}',
                 cancelUrl: window.location.href
