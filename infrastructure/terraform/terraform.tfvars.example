@@ -1,0 +1,30 @@
+# ProDentHub Campaigns Terraform Variables
+# Copy this file to terraform.tfvars and fill in your values
+
+# AWS Configuration
+aws_region  = "ap-southeast-2"
+environment = "production"
+
+# Stripe Configuration (Get from: https://dashboard.stripe.com/apikeys)
+stripe_secret_key      = "sk_live_xxxxxxxxxxxxxxxxxxxxx"
+stripe_public_key      = "pk_live_xxxxxxxxxxxxxxxxxxxxx"
+stripe_webhook_secret  = "whsec_xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# Stripe Product IDs (Create with scripts/setup-stripe.sh)
+stripe_team_product_id         = "prod_xxxxxxxxxxxxx"
+stripe_scholarship_product_id  = "prod_xxxxxxxxxxxxx"
+stripe_mock_premium_product_id = "prod_xxxxxxxxxxxxx"
+
+# Email Configuration (Verify in SES: https://console.aws.amazon.com/ses/)
+ses_from_email = "noreply@prodenthub.com.au"
+
+# Frontend URL
+frontend_url = "https://campaigns.prodenthub.com.au"
+
+# API Domain (Optional - configure custom domain)
+api_domain_name = "api.prodenthub.com.au"
+
+# Lambda Configuration
+lambda_runtime     = "nodejs18.x"
+lambda_memory_size = 512
+lambda_timeout     = 30
