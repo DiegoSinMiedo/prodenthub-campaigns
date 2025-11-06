@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Created Successfully | ProDentHub</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../shared/css/landing-base.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row min-vh-100 align-items-center justify-content-center">
+            <div class="col-md-8 col-lg-6 text-center">
+                <div class="success-icon mb-4">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 5rem;"></i>
+                </div>
+
+                <h1 class="display-5 fw-bold mb-3">Team Created Successfully!</h1>
+
+                <p class="lead text-muted mb-4">
+                    Your team has been created and payment processed. All team members will receive access details via email within 5 minutes.
+                </p>
+
+                <div class="alert alert-info" role="alert">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    <strong>Next Steps:</strong>
+                    <ul class="text-start mt-2 mb-0">
+                        <li>Check your email for team access credentials</li>
+                        <li>Each member will receive their individual login details</li>
+                        <li>Access expires in 6 months from today</li>
+                        <li>Team dashboard available at <a href="https://app.prodenthub.com.au" target="_blank">app.prodenthub.com.au</a></li>
+                    </ul>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-5">
+                    <a href="https://app.prodenthub.com.au" class="btn btn-primary btn-lg">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>
+                        Go to Dashboard
+                    </a>
+                    <a href="https://prodenthub.com.au" class="btn btn-outline-secondary btn-lg">
+                        <i class="bi bi-house-door me-2"></i>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../shared/js/tracking.js"></script>
+    <script src="../shared/js/stripe-handler.js"></script>
+    <script>
+        // Handle Stripe checkout success
+        document.addEventListener('DOMContentLoaded', async function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get('session_id');
+
+            if (sessionId) {
+                const result = await StripeHandler.handleCheckoutSuccess(sessionId);
+                console.log('Payment verification:', result);
+            }
+
+            // Track page view
+            if (typeof TrackingManager !== 'undefined') {
+                TrackingManager.trackEvent('team_creation_complete', {
+                    sessionId: sessionId
+                });
+            }
+        });
+    </script>
+</body>
+</html>

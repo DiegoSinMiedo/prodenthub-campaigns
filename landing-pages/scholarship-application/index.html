@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Apply for ProDentHub scholarship based on your exam attempts and performance. Get discounted access to ADC exam prep.">
+    <meta name="stripe-public-key" content="pk_test_YOUR_STRIPE_PUBLIC_KEY">
+    <title>Apply for Scholarship | ProDentHub</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../shared/css/landing-base.css">
+    <link rel="stylesheet" href="../shared/css/form-styles.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            <div class="col-lg-6 content-column d-flex align-items-center p-5">
+                <div class="content-wrapper">
+                    <h1 class="display-5 fw-bold mb-4">
+                        <i class="bi bi-mortarboard-fill text-primary"></i>
+                        Apply for Scholarship
+                    </h1>
+                    <p class="lead mb-4">Based on your exam attempts and performance, you may qualify for up to 75% scholarship on ProDentHub access.</p>
+
+                    <div class="scholarship-benefits mb-4">
+                        <h5>Scholarship Criteria:</h5>
+                        <ul>
+                            <li><strong>Multiple Attempts:</strong> More attempts = higher scholarship</li>
+                            <li><strong>Exam Score:</strong> Lower scores get more support</li>
+                            <li><strong>Financial Need:</strong> We consider your circumstances</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-light p-4 rounded-3">
+                        <h5 class="mb-3">What You'll Get:</h5>
+                        <ul class="mb-0">
+                            <li>3-Month Full Access to all resources</li>
+                            <li>Personalized study plan</li>
+                            <li>Weekly mock exams</li>
+                            <li>1-on-1 mentorship session</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 form-column d-flex align-items-center justify-content-center p-5">
+                <div class="form-container">
+                    <div class="form-header text-center mb-4">
+                        <h2 class="h3 mb-2">Scholarship Application</h2>
+                        <p class="text-muted">Tell us about your exam journey</p>
+                    </div>
+
+                    <form id="scholarship-form" class="needs-validation" novalidate>
+                        <input type="hidden" name="campaign" value="scholarship-application">
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">First Name *</label>
+                                <input type="text" class="form-control" name="firstName" required minlength="2">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Last Name *</label>
+                                <input type="text" class="form-control" name="lastName" required minlength="2">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email *</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Phone Number *</label>
+                            <input type="tel" class="form-control" name="phone" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Country *</label>
+                            <select class="form-select" name="country" required>
+                                <option value="">Select...</option>
+                                <option value="Australia">Australia</option>
+                                <option value="India">India</option>
+                                <option value="Philippines">Philippines</option>
+                                <option value="New Zealand">New Zealand</option>
+                            </select>
+                        </div>
+
+                        <hr class="my-4">
+                        <h5 class="mb-3">Exam History</h5>
+
+                        <div class="mb-3">
+                            <label class="form-label">Number of Exam Attempts *</label>
+                            <select class="form-select" name="examAttempts" id="examAttempts" required>
+                                <option value="">Select...</option>
+                                <option value="1">1 attempt</option>
+                                <option value="2">2 attempts</option>
+                                <option value="3">3 attempts</option>
+                                <option value="4">4 attempts</option>
+                                <option value="5">5 or more attempts</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Last Exam Score (0-100) *</label>
+                            <input type="number" class="form-control" name="lastScore" id="lastScore" min="0" max="100" required>
+                            <div class="form-text">Enter your most recent exam score</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Last Exam Date *</label>
+                            <input type="date" class="form-control" name="lastExamDate" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Financial Need Level *</label>
+                            <select class="form-select" name="financialNeed" id="financialNeed" required>
+                                <option value="">Select...</option>
+                                <option value="Low">Low - Can afford with some difficulty</option>
+                                <option value="Medium">Medium - Significant financial constraint</option>
+                                <option value="High">High - Severe financial hardship</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Why do you need this scholarship? *</label>
+                            <textarea class="form-control" name="scholarshipReason" rows="4" maxlength="500" required></textarea>
+                            <div class="form-text">Maximum 500 characters</div>
+                        </div>
+
+                        <!-- Scholarship Calculation Display -->
+                        <div id="scholarship-result" class="alert alert-success d-none mb-4">
+                            <h6 class="alert-heading">Your Scholarship Estimate:</h6>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Base Price:</span>
+                                <strong id="base-price">$199.00 AUD</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Scholarship (<span id="scholarship-percent">0</span>%):</span>
+                                <strong class="text-success" id="scholarship-amount">$0.00 AUD</strong>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <span class="fw-bold">Your Price:</span>
+                                <strong class="fs-5" id="final-price">$199.00 AUD</strong>
+                            </div>
+                        </div>
+
+                        <button type="button" id="calculate-btn" class="btn btn-outline-primary w-100 mb-3">
+                            <i class="bi bi-calculator"></i> Calculate My Scholarship
+                        </button>
+
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="consent" required>
+                                <label class="form-check-label small">
+                                    I agree to the Terms of Service and Privacy Policy *
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg w-100" disabled id="submit-btn">
+                            <i class="bi bi-lock-fill me-2"></i> Submit Application & Pay
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../shared/js/validation.js"></script>
+    <script src="../shared/js/tracking.js"></script>
+    <script src="../shared/js/price-calculator.js"></script>
+    <script src="../shared/js/stripe-handler.js"></script>
+    <script src="scholarship-handler.js"></script>
+</body>
+</html>

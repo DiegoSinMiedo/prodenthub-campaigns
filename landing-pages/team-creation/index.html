@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create your study team and split the cost. Get ProDentHub Full Access for 6 months at a fraction of the individual price.">
+    <meta name="stripe-public-key" content="pk_test_YOUR_STRIPE_PUBLIC_KEY">
+
+    <title>Create Your Study Team | ProDentHub</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../shared/css/landing-base.css">
+    <link rel="stylesheet" href="../shared/css/form-styles.css">
+
+    <!-- Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            <!-- Left Column: Content -->
+            <div class="col-lg-6 content-column d-flex align-items-center p-5">
+                <div class="content-wrapper">
+                    <h1 class="display-5 fw-bold mb-4">
+                        <i class="bi bi-people-fill text-primary"></i>
+                        Create Your Study Team
+                    </h1>
+
+                    <p class="lead mb-4">
+                        Team up with fellow dentists and split the cost! Get full access to ProDentHub for 6 months.
+                    </p>
+
+                    <div class="feature-list mb-4">
+                        <div class="feature-item d-flex align-items-start mb-3">
+                            <i class="bi bi-check-circle-fill text-success fs-4 me-3"></i>
+                            <div>
+                                <h5 class="mb-1">Split the Cost</h5>
+                                <p class="text-muted mb-0">$299 total divided among 2-5 team members</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-item d-flex align-items-start mb-3">
+                            <i class="bi bi-trophy-fill text-warning fs-4 me-3"></i>
+                            <div>
+                                <h5 class="mb-1">Full Access for 6 Months</h5>
+                                <p class="text-muted mb-0">All resources, mock exams, and study materials</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-item d-flex align-items-start mb-3">
+                            <i class="bi bi-graph-up-arrow text-primary fs-4 me-3"></i>
+                            <div>
+                                <h5 class="mb-1">Team Progress Tracking</h5>
+                                <p class="text-muted mb-0">Collaborate and motivate each other</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-item d-flex align-items-start mb-3">
+                            <i class="bi bi-shield-check text-info fs-4 me-3"></i>
+                            <div>
+                                <h5 class="mb-1">Flexible Payment</h5>
+                                <p class="text-muted mb-0">Leader pays upfront or individual payment links</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pricing-example bg-light p-4 rounded-3 mb-4">
+                        <h5 class="mb-3">Pricing Example</h5>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Individual 6-month plan:</span>
+                            <strong>$199 AUD</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Team of 3 (per person):</span>
+                            <strong class="text-success">$99.67 AUD</strong>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-bold">You save:</span>
+                            <strong class="text-success fs-5">$99.33 AUD</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Form -->
+            <div class="col-lg-6 form-column d-flex align-items-center justify-content-center p-5">
+                <div class="form-container">
+                    <div class="form-header text-center mb-4">
+                        <h2 class="h3 mb-2">Create Your Team</h2>
+                        <p class="text-muted">Add your team members below (2-5 members)</p>
+                    </div>
+
+                    <form id="team-creation-form" class="needs-validation" novalidate>
+                        <input type="hidden" name="campaign" value="team-creation">
+
+                        <!-- Team Leader Section -->
+                        <div class="section-header mb-3">
+                            <h4 class="h5 mb-0">
+                                <i class="bi bi-person-badge"></i> Team Leader
+                            </h4>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName" class="form-label">First Name *</label>
+                                <input type="text" class="form-control" id="firstName" name="firstName" required minlength="2" maxlength="50">
+                                <div class="invalid-feedback">Please enter your first name (2-50 characters)</div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="lastName" class="form-label">Last Name *</label>
+                                <input type="text" class="form-control" id="lastName" name="lastName" required minlength="2" maxlength="50">
+                                <div class="invalid-feedback">Please enter your last name (2-50 characters)</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email *</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                            <div class="invalid-feedback">Please enter a valid email address</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="country" class="form-label">Country *</label>
+                            <select class="form-select" id="country" name="country" required>
+                                <option value="">Select your country...</option>
+                                <option value="Australia">Australia</option>
+                                <option value="India">India</option>
+                                <option value="Philippines">Philippines</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="New Zealand">New Zealand</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Singapore">Singapore</option>
+                                <option value="Malaysia">Malaysia</option>
+                            </select>
+                            <div class="invalid-feedback">Please select your country</div>
+                        </div>
+
+                        <!-- Team Members Section -->
+                        <div class="section-header mb-3">
+                            <h4 class="h5 mb-0">
+                                <i class="bi bi-people"></i> Team Members
+                            </h4>
+                        </div>
+
+                        <div id="team-members-container">
+                            <!-- Member 1 -->
+                            <div class="team-member-card mb-3" data-member="1">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <strong>Member 1</strong>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-2">
+                                        <input type="text" class="form-control member-name" placeholder="Full Name *" required>
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <input type="email" class="form-control member-email" placeholder="Email *" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" id="add-member-btn" class="btn btn-outline-primary btn-sm mb-4">
+                            <i class="bi bi-plus-circle"></i> Add Team Member
+                        </button>
+
+                        <!-- Price Summary -->
+                        <div class="price-summary bg-light p-3 rounded-3 mb-4">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Total Team Size:</span>
+                                <strong id="total-members">2</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Total Price:</span>
+                                <strong>$299.00 AUD</strong>
+                            </div>
+                            <hr class="my-2">
+                            <div class="d-flex justify-content-between">
+                                <span class="fw-bold">Price per Member:</span>
+                                <strong class="text-success fs-5" id="price-per-member">$149.50 AUD</strong>
+                            </div>
+                        </div>
+
+                        <!-- Consent -->
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="consent" name="consent" required>
+                                <label class="form-check-label small" for="consent">
+                                    I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a> *
+                                </label>
+                                <div class="invalid-feedback">You must agree to continue</div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary btn-lg w-100">
+                            <i class="bi bi-lock-fill me-2"></i>
+                            Proceed to Payment
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="../shared/js/validation.js"></script>
+    <script src="../shared/js/tracking.js"></script>
+    <script src="../shared/js/price-calculator.js"></script>
+    <script src="../shared/js/stripe-handler.js"></script>
+    <script src="team-handler.js"></script>
+</body>
+</html>
