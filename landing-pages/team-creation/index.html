@@ -18,188 +18,261 @@
 
     <!-- Stripe.js -->
     <script src="https://js.stripe.com/v3/"></script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-P95LCCG6');</script>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row min-vh-100">
-            <!-- Left Column: Content -->
-            <div class="col-lg-6 content-column d-flex align-items-center p-5">
-                <div class="content-wrapper">
-                    <h1 class="display-5 fw-bold mb-4">
-                        <i class="bi bi-people-fill text-primary"></i>
-                        Create Your Study Team
-                    </h1>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P95LCCG6"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-                    <p class="lead mb-4">
-                        Study together and split the cost! Get full access to ProDentHub for 6 months - just you and a study partner.
-                    </p>
+    <!-- Hero Section -->
+    <section class="hero text-center" style="background: linear-gradient(135deg, #cf4520 0%, #e85c35 100%); color: white; padding: 1.5rem 0;">
+        <div class="container">
+            <h1 class="display-5 fw-bold mb-2">
+                <i class="bi bi-people-fill"></i> Create Your Study Team
+            </h1>
+            <p class="lead mb-0">Study together, split the cost, and ace the ADC exam</p>
+        </div>
+    </section>
 
-                    <div class="feature-list mb-4">
-                        <div class="feature-item d-flex align-items-start mb-3">
-                            <i class="bi bi-check-circle-fill text-success fs-4 me-3"></i>
-                            <div>
-                                <h5 class="mb-1">Split the Cost in Half</h5>
-                                <p class="text-muted mb-0">$299 total = $149.50 per person</p>
-                            </div>
+    <!-- Main Content -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row align-items-start">
+                <!-- Form Section (Right on large screens) -->
+                <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+                    <div class="form-container attention-pulse p-4 shadow-sm rounded-3 bg-white">
+                        <!-- Trust Badge -->
+                        <div class="trust-urgency-badge mb-3 p-3 rounded-3" style="background-color: #f8f9fa; border-left: 4px solid #cf4520;">
+                            <i class="bi bi-shield-check icon text-success fs-4"></i>
+                            <span class="text ms-2"><strong>Join hundreds</strong> of successful study teams</span>
                         </div>
 
-                        <div class="feature-item d-flex align-items-start mb-3">
-                            <i class="bi bi-trophy-fill text-warning fs-4 me-3"></i>
-                            <div>
-                                <h5 class="mb-1">Full Access for 6 Months</h5>
-                                <p class="text-muted mb-0">All resources, mock exams, and study materials</p>
-                            </div>
+                        <div class="form-header text-center mb-4">
+                            <h2 class="h3 mb-2">Sign Up Together</h2>
+                            <p class="text-muted">You + one study partner = split the cost</p>
                         </div>
 
-                        <div class="feature-item d-flex align-items-start mb-3">
-                            <i class="bi bi-graph-up-arrow text-primary fs-4 me-3"></i>
-                            <div>
-                                <h5 class="mb-1">Study Partner Progress</h5>
-                                <p class="text-muted mb-0">See each other's progress and stay motivated</p>
-                            </div>
-                        </div>
+                        <form id="team-creation-form" class="needs-validation" novalidate>
+                            <input type="hidden" name="campaign" value="team-creation">
 
-                        <div class="feature-item d-flex align-items-start mb-3">
-                            <i class="bi bi-cash-coin text-success fs-4 me-3"></i>
-                            <div>
-                                <h5 class="mb-1">Save $49.50 Each</h5>
-                                <p class="text-muted mb-0">Compared to individual 6-month plan ($199)</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pricing-example bg-light p-4 rounded-3 mb-4">
-                        <h5 class="mb-3">Pricing Comparison</h5>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>Individual 6-month plan:</span>
-                            <strong>$199 AUD</strong>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>Team of 2 (per person):</span>
-                            <strong class="text-success">$149.50 AUD</strong>
-                        </div>
-                        <hr>
-                        <div class="d-flex justify-content-between">
-                            <span class="fw-bold">You save:</span>
-                            <strong class="text-success fs-5">$49.50 AUD each</strong>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Column: Form -->
-            <div class="col-lg-6 form-column d-flex align-items-center justify-content-center p-5">
-                <div class="form-container">
-                    <div class="form-header text-center mb-4">
-                        <h2 class="h3 mb-2">Sign Up Together</h2>
-                        <p class="text-muted">You + one study partner = split the cost</p>
-                    </div>
-
-                    <form id="team-creation-form" class="needs-validation" novalidate>
-                        <input type="hidden" name="campaign" value="team-creation">
-
-                        <!-- Person 1 Section -->
-                        <div class="section-header mb-3">
-                            <h4 class="h5 mb-0">
-                                <i class="bi bi-person-fill"></i> Person 1 (You)
-                            </h4>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="firstName" class="form-label">First Name *</label>
-                                <input type="text" class="form-control" id="firstName" name="firstName" required minlength="2" maxlength="50">
-                                <div class="invalid-feedback">Please enter your first name</div>
+                            <!-- Person 1 Section -->
+                            <div class="section-header mb-3 pb-2" style="border-bottom: 2px solid #cf4520;">
+                                <h4 class="h5 mb-0">
+                                    <i class="bi bi-person-fill text-primary"></i> Person 1 (You)
+                                </h4>
                             </div>
 
-                            <div class="col-md-6 mb-3">
-                                <label for="lastName" class="form-label">Last Name *</label>
-                                <input type="text" class="form-control" id="lastName" name="lastName" required minlength="2" maxlength="50">
-                                <div class="invalid-feedback">Please enter your last name</div>
-                            </div>
-                        </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName" class="form-label">First Name *</label>
+                                    <input type="text" class="form-control" id="firstName" name="firstName" required minlength="2" maxlength="50">
+                                    <div class="invalid-feedback">Please enter your first name</div>
+                                </div>
 
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email *</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
-                            <div class="invalid-feedback">Please enter a valid email address</div>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="country" class="form-label">Country *</label>
-                            <select class="form-select" id="country" name="country" required>
-                                <option value="">Select your country...</option>
-                                <option value="Australia">Australia</option>
-                                <option value="India">India</option>
-                                <option value="Philippines">Philippines</option>
-                                <option value="United Kingdom">United Kingdom</option>
-                                <option value="New Zealand">New Zealand</option>
-                                <option value="Canada">Canada</option>
-                                <option value="Singapore">Singapore</option>
-                                <option value="Malaysia">Malaysia</option>
-                            </select>
-                            <div class="invalid-feedback">Please select your country</div>
-                        </div>
-
-                        <!-- Person 2 Section -->
-                        <div class="section-header mb-3">
-                            <h4 class="h5 mb-0">
-                                <i class="bi bi-person-fill"></i> Person 2 (Your Study Partner)
-                            </h4>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="partnerName" class="form-label">Partner's Full Name *</label>
-                                <input type="text" class="form-control" id="partnerName" name="partnerName" required minlength="2" maxlength="100">
-                                <div class="invalid-feedback">Please enter partner's full name</div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName" class="form-label">Last Name *</label>
+                                    <input type="text" class="form-control" id="lastName" name="lastName" required minlength="2" maxlength="50">
+                                    <div class="invalid-feedback">Please enter your last name</div>
+                                </div>
                             </div>
 
-                            <div class="col-md-6 mb-3">
-                                <label for="partnerEmail" class="form-label">Partner's Email *</label>
-                                <input type="email" class="form-control" id="partnerEmail" name="partnerEmail" required>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email *</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
                                 <div class="invalid-feedback">Please enter a valid email address</div>
                             </div>
-                        </div>
 
-                        <!-- Price Summary -->
-                        <div class="price-summary bg-light p-3 rounded-3 mb-4">
+                            <div class="mb-4">
+                                <label for="country" class="form-label">Country *</label>
+                                <select class="form-select" id="country" name="country" required>
+                                    <option value="">Select your country...</option>
+                                    <option value="Australia">Australia</option>
+                                    <option value="India">India</option>
+                                    <option value="Philippines">Philippines</option>
+                                    <option value="United Kingdom">United Kingdom</option>
+                                    <option value="New Zealand">New Zealand</option>
+                                    <option value="Canada">Canada</option>
+                                    <option value="Singapore">Singapore</option>
+                                    <option value="Malaysia">Malaysia</option>
+                                </select>
+                                <div class="invalid-feedback">Please select your country</div>
+                            </div>
+
+                            <!-- Person 2 Section -->
+                            <div class="section-header mb-3 pb-2" style="border-bottom: 2px solid #cf4520;">
+                                <h4 class="h5 mb-0">
+                                    <i class="bi bi-person-fill text-primary"></i> Person 2 (Your Study Partner)
+                                </h4>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="partnerName" class="form-label">Partner's Full Name *</label>
+                                    <input type="text" class="form-control" id="partnerName" name="partnerName" required minlength="2" maxlength="100">
+                                    <div class="invalid-feedback">Please enter partner's full name</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="partnerEmail" class="form-label">Partner's Email *</label>
+                                    <input type="email" class="form-control" id="partnerEmail" name="partnerEmail" required>
+                                    <div class="invalid-feedback">Please enter a valid email address</div>
+                                </div>
+                            </div>
+
+                            <!-- Price Summary -->
+                            <div class="price-summary p-3 rounded-3 mb-4" style="background: linear-gradient(135deg, rgba(207, 69, 32, 0.1) 0%, rgba(232, 92, 53, 0.1) 100%); border: 2px solid #cf4520;">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Total Team Size:</span>
+                                    <strong>2 people</strong>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Total Price:</span>
+                                    <strong>$299.00 AUD</strong>
+                                </div>
+                                <hr class="my-2">
+                                <div class="d-flex justify-content-between">
+                                    <span class="fw-bold">Price per Person:</span>
+                                    <strong class="text-success fs-5">$149.50 AUD</strong>
+                                </div>
+                            </div>
+
+                            <!-- Consent -->
+                            <div class="mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="consent" name="consent" required>
+                                    <label class="form-check-label small" for="consent">
+                                        I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a> *
+                                    </label>
+                                    <div class="invalid-feedback">You must agree to continue</div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-lg w-100" style="background: linear-gradient(135deg, #cf4520 0%, #e85c35 100%); color: white; border: none;">
+                                <i class="bi bi-lock-fill me-2"></i>
+                                Proceed to Payment
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Content Section (Left on large screens) -->
+                <div class="col-lg-6 order-lg-1">
+                    <div class="content-wrapper">
+                        <h2 class="h3 fw-bold mb-4" style="color: #cf4520;">
+                            Study Smarter Together - Save $49.50 Each
+                        </h2>
+
+                        <p class="lead mb-4">
+                            Join forces with a study partner and get full access to ProDentHub for 6 months. Split the cost and study together!
+                        </p>
+
+                        <!-- Benefits List -->
+                        <ul class="benefits-list list-unstyled mb-4">
+                            <li class="mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <strong>Split the Cost in Half</strong> - $299 total = $149.50 per person
+                            </li>
+                            <li class="mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <strong>Full Access for 6 Months</strong> - All resources, mock exams, and study materials
+                            </li>
+                            <li class="mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <strong>Study Partner Progress</strong> - See each other's progress and stay motivated
+                            </li>
+                            <li class="mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <strong>Save $49.50 Each</strong> - Compared to individual 6-month plan ($199)
+                            </li>
+                        </ul>
+
+                        <!-- Pricing Comparison -->
+                        <div class="pricing-example bg-light p-4 rounded-3 mb-4 shadow-sm">
+                            <h5 class="mb-3 fw-bold" style="color: #cf4520;">Pricing Comparison</h5>
                             <div class="d-flex justify-content-between mb-2">
-                                <span>Total Team Size:</span>
-                                <strong>2 people</strong>
+                                <span>Individual 6-month plan:</span>
+                                <strong>$199 AUD</strong>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
-                                <span>Total Price:</span>
-                                <strong>$299.00 AUD</strong>
+                                <span>Team of 2 (per person):</span>
+                                <strong class="text-success">$149.50 AUD</strong>
                             </div>
                             <hr class="my-2">
                             <div class="d-flex justify-content-between">
-                                <span class="fw-bold">Price per Person:</span>
-                                <strong class="text-success fs-5">$149.50 AUD</strong>
+                                <span class="fw-bold">You save:</span>
+                                <strong class="text-success fs-5">$49.50 AUD each</strong>
                             </div>
                         </div>
-
-                        <!-- Consent -->
-                        <div class="mb-4">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="consent" name="consent" required>
-                                <label class="form-check-label small" for="consent">
-                                    I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a> *
-                                </label>
-                                <div class="invalid-feedback">You must agree to continue</div>
-                            </div>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <button type="submit" class="btn btn-primary btn-lg w-100">
-                            <i class="bi bi-lock-fill me-2"></i>
-                            Proceed to Payment
-                        </button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Features Grid Section -->
+    <section class="py-5" style="background-color: #f8f9fa;">
+        <div class="container">
+            <h3 class="text-center mb-5 fw-bold" style="color: #cf4520;">What's Included in Your Team Plan</h3>
+            <div class="features-grid row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card text-center p-4 bg-white rounded-3 shadow-sm h-100">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-book-fill fs-1" style="color: #cf4520;"></i>
+                        </div>
+                        <h3 class="feature-title h5 mb-2">Complete Study Materials</h3>
+                        <p class="feature-description text-muted mb-0">Access to all study resources and materials for 6 months</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card text-center p-4 bg-white rounded-3 shadow-sm h-100">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-clipboard-check-fill fs-1" style="color: #cf4520;"></i>
+                        </div>
+                        <h3 class="feature-title h5 mb-2">Unlimited Mock Exams</h3>
+                        <p class="feature-description text-muted mb-0">Practice with realistic mock exams and track your progress</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card text-center p-4 bg-white rounded-3 shadow-sm h-100">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-graph-up-arrow fs-1" style="color: #cf4520;"></i>
+                        </div>
+                        <h3 class="feature-title h5 mb-2">Progress Tracking</h3>
+                        <p class="feature-description text-muted mb-0">Monitor both you and your partner's study progress</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card text-center p-4 bg-white rounded-3 shadow-sm h-100">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-people-fill fs-1" style="color: #cf4520;"></i>
+                        </div>
+                        <h3 class="feature-title h5 mb-2">Team Motivation</h3>
+                        <p class="feature-description text-muted mb-0">Study together and keep each other accountable</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4 text-center text-white" style="background: linear-gradient(135deg, #cf4520 0%, #e85c35 100%);">
+        <div class="container">
+            <p class="mb-2">&copy; 2024 ProDentHub. All rights reserved.</p>
+            <p class="mb-0">
+                <a href="#" class="text-white text-decoration-none me-3">Privacy Policy</a>
+                <a href="#" class="text-white text-decoration-none me-3">Terms of Service</a>
+                <a href="#" class="text-white text-decoration-none">Contact Us</a>
+            </p>
+        </div>
+    </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

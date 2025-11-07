@@ -12,129 +12,257 @@
     <link rel="stylesheet" href="../shared/css/landing-base.css">
     <link rel="stylesheet" href="../shared/css/form-styles.css">
     <script src="https://js.stripe.com/v3/"></script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-P95LCCG6');</script>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row min-vh-100">
-            <div class="col-lg-6 content-column d-flex align-items-center p-5">
-                <div class="content-wrapper">
-                    <h1 class="display-5 fw-bold mb-4">
-                        <i class="bi bi-tag-fill text-primary"></i>
-                        Apply Your Discount Coupon
-                    </h1>
-                    <p class="lead mb-4">Have a discount code? Get instant savings on ProDentHub access!</p>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P95LCCG6"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-                    <div class="feature-list">
-                        <div class="feature-item d-flex mb-3">
-                            <i class="bi bi-check-circle-fill text-success fs-4 me-3"></i>
-                            <div><strong>Instant Access</strong> to all ADC prep resources</div>
+    <!-- Hero Section -->
+    <section class="hero text-center" style="background: linear-gradient(135deg, #cf4520 0%, #e85c35 100%); color: white; padding: 1.5rem 0;">
+        <div class="container">
+            <h1 class="display-5 fw-bold mb-2">
+                <i class="bi bi-tag-fill"></i> Apply Your Discount Coupon
+            </h1>
+            <p class="lead mb-0">Get instant savings on ProDentHub access</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row align-items-start">
+                <!-- Form Section (Right on large screens) -->
+                <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+                    <div class="form-container attention-pulse p-4 shadow-sm rounded-3 bg-white">
+                        <!-- Trust Badge -->
+                        <div class="trust-urgency-badge mb-3 p-3 rounded-3" style="background-color: #f8f9fa; border-left: 4px solid #cf4520;">
+                            <i class="bi bi-shield-check icon text-success fs-4"></i>
+                            <span class="text ms-2"><strong>Secure checkout</strong> with instant access</span>
                         </div>
-                        <div class="feature-item d-flex mb-3">
-                            <i class="bi bi-clock-fill text-info fs-4 me-3"></i>
-                            <div><strong>Flexible Plans</strong> from 1 to 12 months</div>
+
+                        <div class="form-header text-center mb-4">
+                            <h2 class="h3 mb-2">Complete Your Purchase</h2>
+                            <p class="text-muted">Apply your coupon for instant savings</p>
                         </div>
-                        <div class="feature-item d-flex mb-3">
-                            <i class="bi bi-gift-fill text-danger fs-4 me-3"></i>
-                            <div><strong>Discount Coupons</strong> save up to 50%</div>
-                        </div>
+
+                        <form id="discount-purchase-form" class="needs-validation" novalidate>
+                            <input type="hidden" name="campaign" value="discount-purchase">
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">First Name *</label>
+                                    <input type="text" class="form-control" name="firstName" required minlength="2">
+                                    <div class="invalid-feedback">Please enter your first name</div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Last Name *</label>
+                                    <input type="text" class="form-control" name="lastName" required minlength="2">
+                                    <div class="invalid-feedback">Please enter your last name</div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Email *</label>
+                                <input type="email" class="form-control" name="email" required>
+                                <div class="invalid-feedback">Please enter a valid email</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Country *</label>
+                                <select class="form-select" name="country" required>
+                                    <option value="">Select...</option>
+                                    <option value="Australia">Australia</option>
+                                    <option value="India">India</option>
+                                    <option value="Philippines">Philippines</option>
+                                    <option value="New Zealand">New Zealand</option>
+                                    <option value="United Kingdom">United Kingdom</option>
+                                    <option value="Canada">Canada</option>
+                                    <option value="Singapore">Singapore</option>
+                                    <option value="Malaysia">Malaysia</option>
+                                </select>
+                                <div class="invalid-feedback">Please select your country</div>
+                            </div>
+
+                            <hr class="my-4" style="border-color: #cf4520;">
+                            <h5 class="mb-3" style="color: #cf4520;">Select Plan</h5>
+
+                            <div class="mb-4">
+                                <label class="form-label">Plan Duration *</label>
+                                <select class="form-select" name="planType" id="planType" required>
+                                    <option value="">Select plan...</option>
+                                    <option value="basic">Basic - 1 Month ($49 AUD)</option>
+                                    <option value="standard">Standard - 3 Months ($129 AUD)</option>
+                                    <option value="full">Full - 6 Months ($199 AUD)</option>
+                                    <option value="premium">Premium - 12 Months ($299 AUD)</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a plan</div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Discount Coupon Code</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control text-uppercase" name="couponCode" id="couponCode" placeholder="e.g., SAVE20">
+                                    <button type="button" class="btn" style="background: #cf4520; color: white;" id="apply-coupon-btn">
+                                        <i class="bi bi-check2"></i> Apply
+                                    </button>
+                                </div>
+                                <div id="coupon-feedback" class="form-text"></div>
+                            </div>
+
+                            <div id="pricing-summary" class="d-none mb-4 p-3 rounded-3" style="background: linear-gradient(135deg, rgba(207, 69, 32, 0.1) 0%, rgba(232, 92, 53, 0.1) 100%); border: 2px solid #cf4520;">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Original Price:</span>
+                                    <strong id="original-price">$0.00 AUD</strong>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2 text-success">
+                                    <span>Discount (<span id="discount-percent">0</span>%):</span>
+                                    <strong id="discount-amount">-$0.00 AUD</strong>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between">
+                                    <span class="fw-bold">Final Price:</span>
+                                    <strong class="text-success fs-5" id="final-price">$0.00 AUD</strong>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="consent" required>
+                                    <label class="form-check-label small">
+                                        I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a> *
+                                    </label>
+                                    <div class="invalid-feedback">You must agree to continue</div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-lg w-100" style="background: linear-gradient(135deg, #cf4520 0%, #e85c35 100%); color: white; border: none;">
+                                <i class="bi bi-lock-fill me-2"></i> Proceed to Payment
+                            </button>
+                        </form>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-lg-6 form-column d-flex align-items-center justify-content-center p-5">
-                <div class="form-container">
-                    <div class="form-header text-center mb-4">
-                        <h2 class="h3 mb-2">Complete Your Purchase</h2>
-                    </div>
+                <!-- Content Section (Left on large screens) -->
+                <div class="col-lg-6 order-lg-1">
+                    <div class="content-wrapper">
+                        <h2 class="h3 fw-bold mb-4" style="color: #cf4520;">
+                            Save More with Discount Coupons
+                        </h2>
 
-                    <form id="discount-purchase-form" class="needs-validation" novalidate>
-                        <input type="hidden" name="campaign" value="discount-purchase">
+                        <p class="lead mb-4">
+                            Have a discount code? Get instant savings on ProDentHub access and start preparing for your ADC exam today!
+                        </p>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">First Name *</label>
-                                <input type="text" class="form-control" name="firstName" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Last Name *</label>
-                                <input type="text" class="form-control" name="lastName" required>
-                            </div>
-                        </div>
+                        <!-- Benefits List -->
+                        <ul class="benefits-list list-unstyled mb-4">
+                            <li class="mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <strong>Instant Access</strong> - Start studying immediately after payment
+                            </li>
+                            <li class="mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <strong>Flexible Plans</strong> - Choose from 1, 3, 6, or 12-month access
+                            </li>
+                            <li class="mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <strong>Discount Coupons</strong> - Save up to 50% on any plan
+                            </li>
+                            <li class="mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <strong>All Resources Included</strong> - Full access to mock exams and materials
+                            </li>
+                        </ul>
 
-                        <div class="mb-3">
-                            <label class="form-label">Email *</label>
-                            <input type="email" class="form-control" name="email" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Country *</label>
-                            <select class="form-select" name="country" required>
-                                <option value="">Select...</option>
-                                <option value="Australia">Australia</option>
-                                <option value="India">India</option>
-                                <option value="Philippines">Philippines</option>
-                                <option value="New Zealand">New Zealand</option>
-                            </select>
-                        </div>
-
-                        <hr class="my-4">
-                        <h5 class="mb-3">Select Plan</h5>
-
-                        <div class="mb-4">
-                            <label class="form-label">Plan Duration *</label>
-                            <select class="form-select" name="planType" id="planType" required>
-                                <option value="">Select plan...</option>
-                                <option value="basic">Basic - 1 Month ($49 AUD)</option>
-                                <option value="standard">Standard - 3 Months ($129 AUD)</option>
-                                <option value="full">Full - 6 Months ($199 AUD)</option>
-                                <option value="premium">Premium - 12 Months ($299 AUD)</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label">Discount Coupon Code</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control text-uppercase" name="couponCode" id="couponCode" placeholder="e.g., SAVE20">
-                                <button type="button" class="btn btn-outline-primary" id="apply-coupon-btn">
-                                    <i class="bi bi-check2"></i> Apply
-                                </button>
-                            </div>
-                            <div id="coupon-feedback" class="form-text"></div>
-                        </div>
-
-                        <div id="pricing-summary" class="alert alert-light d-none">
+                        <!-- Plan Comparison -->
+                        <div class="bg-light p-4 rounded-3 mb-4 shadow-sm">
+                            <h5 class="mb-3 fw-bold" style="color: #cf4520;">Available Plans:</h5>
                             <div class="d-flex justify-content-between mb-2">
-                                <span>Original Price:</span>
-                                <strong id="original-price">$0.00 AUD</strong>
+                                <span><strong>Basic</strong> (1 month):</span>
+                                <strong>$49 AUD</strong>
                             </div>
-                            <div class="d-flex justify-content-between mb-2 text-success">
-                                <span>Discount (<span id="discount-percent">0</span>%):</span>
-                                <strong id="discount-amount">-$0.00 AUD</strong>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span><strong>Standard</strong> (3 months):</span>
+                                <strong>$129 AUD</strong>
                             </div>
-                            <hr>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span><strong>Full</strong> (6 months):</span>
+                                <strong>$199 AUD</strong>
+                            </div>
                             <div class="d-flex justify-content-between">
-                                <span class="fw-bold">Final Price:</span>
-                                <strong class="fs-5 text-primary" id="final-price">$0.00 AUD</strong>
+                                <span><strong>Premium</strong> (12 months):</span>
+                                <strong>$299 AUD</strong>
                             </div>
                         </div>
-
-                        <div class="mb-3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="consent" required>
-                                <label class="form-check-label small">
-                                    I agree to the Terms and Privacy Policy *
-                                </label>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-lg w-100">
-                            <i class="bi bi-lock-fill me-2"></i> Proceed to Payment
-                        </button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Features Grid Section -->
+    <section class="py-5" style="background-color: #f8f9fa;">
+        <div class="container">
+            <h3 class="text-center mb-5 fw-bold" style="color: #cf4520;">What's Included</h3>
+            <div class="features-grid row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card text-center p-4 bg-white rounded-3 shadow-sm h-100">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-book-fill fs-1" style="color: #cf4520;"></i>
+                        </div>
+                        <h3 class="feature-title h5 mb-2">Study Materials</h3>
+                        <p class="feature-description text-muted mb-0">Comprehensive ADC exam preparation resources</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card text-center p-4 bg-white rounded-3 shadow-sm h-100">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-clipboard-check-fill fs-1" style="color: #cf4520;"></i>
+                        </div>
+                        <h3 class="feature-title h5 mb-2">Mock Exams</h3>
+                        <p class="feature-description text-muted mb-0">Unlimited practice tests with detailed feedback</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card text-center p-4 bg-white rounded-3 shadow-sm h-100">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-graph-up-arrow fs-1" style="color: #cf4520;"></i>
+                        </div>
+                        <h3 class="feature-title h5 mb-2">Progress Tracking</h3>
+                        <p class="feature-description text-muted mb-0">Monitor your improvement over time</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card text-center p-4 bg-white rounded-3 shadow-sm h-100">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-headset fs-1" style="color: #cf4520;"></i>
+                        </div>
+                        <h3 class="feature-title h5 mb-2">Support</h3>
+                        <p class="feature-description text-muted mb-0">Expert guidance when you need it</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4 text-center text-white" style="background: linear-gradient(135deg, #cf4520 0%, #e85c35 100%);">
+        <div class="container">
+            <p class="mb-2">&copy; 2024 ProDentHub. All rights reserved.</p>
+            <p class="mb-0">
+                <a href="#" class="text-white text-decoration-none me-3">Privacy Policy</a>
+                <a href="#" class="text-white text-decoration-none me-3">Terms of Service</a>
+                <a href="#" class="text-white text-decoration-none">Contact Us</a>
+            </p>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../shared/js/validation.js"></script>
