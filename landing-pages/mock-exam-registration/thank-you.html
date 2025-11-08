@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Exam Registration Successful | ProDentHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <div class="container min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="text-center">
+            <i class="bi bi-check-circle-fill text-success" style="font-size: 5rem;"></i>
+            <h1 class="display-5 fw-bold my-4">Registration Successful!</h1>
+            <p class="lead">You're registered for the Universal Mock Exam.</p>
+
+            <div class="alert alert-info mt-4 text-start">
+                <h6 class="alert-heading"><i class="bi bi-info-circle me-2"></i>Next Steps:</h6>
+                <ul class="mb-0">
+                    <li>Check your email for exam access link</li>
+                    <li>Exam link will be sent 24 hours before exam time</li>
+                    <li>Ensure stable internet connection on exam day</li>
+                    <li>Results and statistics available immediately after submission</li>
+                </ul>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+                <a href="https://app.prodenthub.com.au" class="btn btn-primary btn-lg">Go to Dashboard</a>
+                <a href="https://prodenthub.com.au" class="btn btn-outline-secondary btn-lg">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../shared/js/tracking.js"></script>
+    <script>
+        // Track registration completion
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const type = urlParams.get('type') || 'premium';
+
+            if (typeof TrackingManager !== 'undefined') {
+                TrackingManager.trackEvent('mock_exam_registration_complete', {
+                    registrationType: type
+                });
+            }
+        });
+    </script>
+</body>
+</html>
