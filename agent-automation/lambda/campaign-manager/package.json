@@ -1,0 +1,22 @@
+{
+  "name": "campaign-manager-lambda",
+  "version": "1.0.0",
+  "description": "Lambda function for campaign CRUD operations",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "zip -r function.zip src/ node_modules/",
+    "deploy": "aws lambda update-function-code --function-name campaign-manager-handler --zip-file fileb://function.zip"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.470.0",
+    "@aws-sdk/lib-dynamodb": "^3.470.0",
+    "uuid": "^9.0.1",
+    "ulid": "^2.3.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "author": "ProDentHub Engineering",
+  "license": "MIT"
+}

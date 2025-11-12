@@ -1,0 +1,25 @@
+{
+  "name": "content-generation-lambda",
+  "version": "1.0.0",
+  "description": "Lambda function for AI-powered content generation",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "zip -r function.zip src/ node_modules/",
+    "deploy": "aws lambda update-function-code --function-name content-generation-handler --zip-file fileb://function.zip"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.470.0",
+    "@aws-sdk/lib-dynamodb": "^3.470.0",
+    "@aws-sdk/client-s3": "^3.470.0",
+    "@anthropic-ai/sdk": "^0.17.0",
+    "openai": "^4.24.0",
+    "uuid": "^9.0.1",
+    "ulid": "^2.3.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "author": "ProDentHub Engineering",
+  "license": "MIT"
+}

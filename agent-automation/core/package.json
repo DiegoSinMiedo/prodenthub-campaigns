@@ -1,0 +1,29 @@
+{
+  "name": "prodenthub-agent-core",
+  "version": "1.0.0",
+  "description": "Core agent service for automated marketing content generation and publishing",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest",
+    "schedule": "node src/scheduler.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.17.0",
+    "@aws-sdk/client-dynamodb": "^3.470.0",
+    "@aws-sdk/lib-dynamodb": "^3.470.0",
+    "@aws-sdk/client-secrets-manager": "^3.470.0",
+    "axios": "^1.6.5",
+    "node-cron": "^3.0.3",
+    "openai": "^4.24.0",
+    "ulid": "^2.3.0",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.2"
+  },
+  "author": "ProDentHub Engineering",
+  "license": "MIT"
+}
